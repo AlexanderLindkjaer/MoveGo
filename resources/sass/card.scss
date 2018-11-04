@@ -1,0 +1,21 @@
+.image--cover {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin: 20px;
+  object-fit: cover;
+  object-position: center right;
+}
+
+.card{
+  //background-color: lightcoral;
+}
+
+.small-btn .btn{
+  padding: 3px;
+  margin-top: 3px;
+}
+
+.hover{
+  cursor: pointer;
+}
