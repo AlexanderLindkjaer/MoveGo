@@ -27,12 +27,10 @@
 <!-- Navigation -->
 <nav class="navbar navbar-light static-top bg-dark">
     <div class="container">
-        <h3><a class="navbar-brand text-white" href="{{ route('home') }}"><img src="/logo/logo_white.png" height="40px" alt=""></a></h3>
+        <div><a class="navbar-brand text-white" href="{{ route('home') }}"><img src="/logo/logo_white.png" height="40px" alt=""></a></div>
         <div>
-            <h6><a class=" text-white mb-0" href="{{ route('concept') }}">Koncept</a></h6>
-        </div>
-        <div>
-            <h6><a class=" text-white mb-0" href="{{ route('create-event') }}">Opret aktivitet</a></h6>
+            <h6 class="mb-0 d-inline-block ml-4"><a class=" text-white mb-0 d-inline-block" href="{{ route('concept') }}">Koncept</a></h6>
+            <h6 class="mb-0 d-inline-block ml-4"><a class=" text-white mb-0 d-inline-block" href="{{ route('create-event') }}">Opret aktivitet</a></h6>
         </div>
 
     </div>
