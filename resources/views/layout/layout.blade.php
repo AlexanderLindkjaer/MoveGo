@@ -27,9 +27,14 @@
 <!-- Navigation -->
 <nav class="navbar navbar-light static-top bg-dark">
     <div class="container">
-        <h3><a class="navbar-brand text-white" href="{{ route('home') }}">MoveGo</a></h3>
-        <h5><a class=" text-white" href="{{ route('concept') }}">Koncept</a></h5>
-        <h5><a class=" text-white" href="{{ route('create-event') }}">Opret aktivitet</a></h5>
+        <h3><a class="navbar-brand text-white" href="{{ route('home') }}"><img src="/logo/logo_white.png" height="40px" alt=""></a></h3>
+        <div>
+            <h6><a class=" text-white mb-0" href="{{ route('concept') }}">Koncept</a></h6>
+        </div>
+        <div>
+            <h6><a class=" text-white mb-0" href="{{ route('create-event') }}">Opret aktivitet</a></h6>
+        </div>
+
     </div>
 </nav>
 

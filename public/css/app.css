@@ -13957,6 +13957,10 @@ footer.footer {
   .header-logo {
     width: 70%;
   }
+
+  .navbar-brand img {
+    height: 25px;
+  }
 }
 
 .image--cover {

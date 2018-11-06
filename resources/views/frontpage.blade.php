@@ -32,7 +32,7 @@
                         <i class="fa fa-location-arrow m-auto "></i>
                     </div>
                     <h3>Der hvor du er</h3>
-                    <p class="lead mb-0">Movego viser alle de sportslige aktiviteter på et kort, således man let kan se, hvor folk dyrker netop din sportsgren</p>
+                    <p class="lead mb-0">Movego viser alle de sportslige aktiviteter på et kort, således man let kan se, hvor folk dyrker netop din sportsgren.</p>
                 </div>
             </div>
         </div>
