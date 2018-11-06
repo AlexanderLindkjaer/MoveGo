@@ -4,9 +4,10 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-9 mx-auto">
-                <h1 class="mb-5 ">MoveGo</h1>
+                <img src="/logo/logo_white.png" class="header-logo" alt="">
                 <br>
-                <h3 class="">Sport når det passer dig</h3>
+                <h3>Sport <span id="header_typed" ></span></h3>
+
             </div>
             <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
             </div>

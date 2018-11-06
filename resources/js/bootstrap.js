@@ -10,9 +10,11 @@ window._ = require('lodash');
 try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
-
+    require('typed.js');
     require('bootstrap');
     require('toastr');
+
+    window.Typed =  require('typed.js');
     window.toastr = require('toastr');
 } catch (e) {}
 

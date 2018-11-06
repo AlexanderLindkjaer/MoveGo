@@ -22,6 +22,7 @@ Vue.component('events', require('./components/EventsComponent.vue'));
 Vue.component('single-event', require('./components/SingleEventComponent.vue'));
 Vue.component('events-map', require('./components/AllEventsMap.vue'));
 Vue.component('create-edit-event', require('./components/CreateEditEvent.vue'));
+Vue.component('show-event', require('./components/ShowEvent.vue'));
 
 
 // import * as VueGoogleMaps from "vue2-google-maps";
@@ -35,6 +36,7 @@ Vue.component('create-edit-event', require('./components/CreateEditEvent.vue'));
 
 import 'vue-googlemaps/dist/vue-googlemaps.css'
 import VueGoogleMaps from 'vue-googlemaps'
+import Typed from 'typed.js';
 
 Vue.use(VueGoogleMaps, {
     load: {

@@ -22,13 +22,14 @@
     @yield('head')
 </head>
 
-<body>
+<body class="bg-sitebackground">
 
 <!-- Navigation -->
-<nav class="navbar navbar-light static-top bg-blue">
+<nav class="navbar navbar-light static-top bg-dark">
     <div class="container">
-        <a class="navbar-brand text-white" href="{{ route('home') }}">MoveGo</a>
-        <a class="btn bg-orange text-white" href="{{ route('create-event') }}">Opret aktivitet</a>
+        <h3><a class="navbar-brand text-white" href="{{ route('home') }}">MoveGo</a></h3>
+        <h5><a class=" text-white" href="{{ route('concept') }}">Koncept</a></h5>
+        <h5><a class=" text-white" href="{{ route('create-event') }}">Opret aktivitet</a></h5>
     </div>
 </nav>
 
@@ -36,7 +37,7 @@
     @yield('content')
 </div>
 
-    {{--@include('layout.footer')--}}
+    @include('layout.footer')
 
 
 
@@ -44,7 +45,7 @@
 
 <!-- Bootstrap core JavaScript -->
 <script src="{{ mix('/js/app.js') }}"></script>
-{{--<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>--}}
+
 
 </body>
 

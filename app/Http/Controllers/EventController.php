@@ -66,7 +66,8 @@ class EventController extends Controller
      */
     public function show(event $event)
     {
-        //
+        $id = $event->id;
+        return view('show-event', compact('id'));
     }
 
     /**
@@ -84,13 +85,21 @@ class EventController extends Controller
         return view('create-event', compact('state', 'id'));
     }
 
-    public function raw(event $event)
+    public function signup(Request $request)
     {
-        $event->start_of_event_date = Carbon::parse($event->start_of_event_date)->format('Y-m-d');
-
+        $event = event::find($request->id);
+        $event->increment('no_of_signups');
         return $event;
     }
 
+    public function raw(event $event)
+    {
+        $event->start_of_event_date = Carbon::parse($event->start_of_event_date)->format('Y-m-d');
+        $event->start_of_event_date_pretty = Carbon::parse($event->start_of_event_date)->format('d-m-Y');
+
+        return $event;
+
+    }
 
     /**
      * Update the specified resource in storage.
@@ -112,8 +121,8 @@ class EventController extends Controller
      * @param  \App\event  $event
      * @return \Illuminate\Http\Response
      */
-    public function destroy(event $event)
+    public function concept()
     {
-        //
+        return view('concept');
     }
 }

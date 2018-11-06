@@ -1,5 +1,4 @@
-
-$(document).on("click","#create_event_submit",function() {
+$(document).on("click", "#create_event_submit", function () {
 
     let form_id = '#create_event_form';
     let form = $(form_id);
@@ -7,7 +6,36 @@ $(document).on("click","#create_event_submit",function() {
     let method = 'post';
     let succesMessage = '';
 
-    $.movego.form(form, url, method, succesMessage, function(){
+    $.movego.form(form, url, method, succesMessage, function () {
         return false
     });
 });
+
+$('document').ready(function () {
+
+    if ($('#header_typed').length) {
+
+        var options = {
+            strings: [
+                'i nærheden af dig',
+                'når det skal være sjovt',
+                'når det skal være socialt',
+                'når det skal være nyt',
+                'som det passer dig'
+
+            ],
+            typeSpeed: 50,
+            backSpeed: 50,
+            backDelay: 500,
+            startDelay: 1000,
+            smartBackspace: true,
+            showCursor: true,
+            onComplete: function () {
+                $(".typed-cursor").hide();
+            }
+        }
+        var typed = new window.Typed("#header_typed", options);
+
+    }
+});
+

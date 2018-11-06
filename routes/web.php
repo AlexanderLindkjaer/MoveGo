@@ -19,3 +19,8 @@ Route::get('/event/all/raw', 'EventController@allRaw');
 Route::get('/events/all/raw', 'EventController@rawIndex');
 Route::post('/event/create', 'EventController@store');
 Route::post('/event/edit', 'EventController@update');
+Route::post('/event/signup', 'EventController@signup');
+Route::get('event/{event}', 'EventController@show');
+
+
+Route::get('/koncept', 'EventController@concept')->name('concept');

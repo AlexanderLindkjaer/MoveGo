@@ -74,18 +74,6 @@
 
                     </div>
 
-
-
-                    <div class="form-group col-md-12 ">
-                        <label >Longitude</label>
-                        <input type="text" class="form-control" v-model="event.long">
-                    </div>
-
-                    <div class="form-group col-md-12 ">
-                        <label >Lattitude</label>
-                        <input type="text" class="form-control" v-model="event.lat">
-                    </div>
-
                     <div class="form-group col-md-12 ">
                         <label >Adresse</label>
                         <input type="text" class="form-control" v-model="event.adress">
@@ -95,7 +83,7 @@
         </div>
 
         <div class="col-12  d-flex align-items-stretch  my-4">
-            <div class="btn btn-success w-100 text-center" @click="CreateUpdate"><h3>{{ state == 'create' ? 'Opret Aktivitet' : 'Rediger Aktivitet' }}</h3></div>
+            <div class="btn bg-orange w-100 text-white text-center" @click="CreateUpdate"><h3>{{ state == 'create' ? 'Opret Aktivitet' : 'Rediger Aktivitet' }}</h3></div>
         </div>
 
     </div>
@@ -197,7 +185,6 @@
                     axios.get('/event/raw/'+this.event_id)
                         .then(function (response) {
                             self.event = response.data
-
                             self.searchLocation = { lat: Number(self.event.lat), lng: Number(self.event.long) };
                         })
 
