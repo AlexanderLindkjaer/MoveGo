@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6cd237ce-64e5-471a-8bbf-25718a3c35f2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/EventController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/EventController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/concept.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/concept.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layout/footer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layout/footer.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,7 +30,7 @@
         <counts>
           <entry key="env" value="13" />
           <entry key="js" value="534" />
-          <entry key="php" value="3445" />
+          <entry key="php" value="3501" />
           <entry key="scss" value="555" />
           <entry key="svg" value="1" />
           <entry key="vue" value="3514" />
@@ -40,9 +39,9 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key=".env file" value="13" />
-          <entry key="Blade" value="1562" />
+          <entry key="Blade" value="1572" />
           <entry key="JavaScript" value="534" />
-          <entry key="PHP" value="1883" />
+          <entry key="PHP" value="1929" />
           <entry key="SCSS" value="555" />
           <entry key="SVG" value="1" />
           <entry key="Vue.js" value="3514" />
@@ -52,7 +51,7 @@
         <counts>
           <entry key="js" value="20" />
           <entry key="json" value="1" />
-          <entry key="php" value="54" />
+          <entry key="php" value="55" />
           <entry key="scss" value="29" />
           <entry key="svg" value="1" />
           <entry key="vue" value="14" />
@@ -63,7 +62,7 @@
           <entry key="Blade" value="34" />
           <entry key="JSON" value="1" />
           <entry key="JavaScript" value="20" />
-          <entry key="PHP" value="20" />
+          <entry key="PHP" value="21" />
           <entry key="SCSS" value="29" />
           <entry key="SVG" value="1" />
           <entry key="Vue.js" value="14" />
@@ -92,15 +91,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/event.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="406">
-              <caret line="26" column="39" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/js/components/EventComment.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="269">
@@ -109,16 +99,29 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/views/concept.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="60" selection-start-line="60" selection-end-line="60" />
+            <state relative-caret-position="126">
+              <caret line="18" column="459" selection-start-line="18" selection-start-column="459" selection-end-line="18" selection-end-column="459" />
+              <folding>
+                <element signature="e#275#342#0#HTML" expanded="true" />
+                <element signature="e#1066#1132#0#HTML" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/EventController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="321">
+              <caret line="25" column="28" lean-forward="true" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/contact.blade.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="180">
@@ -217,15 +220,15 @@
         <option value="$PROJECT_DIR$/resources/js/components/AllEventsMap.vue" />
         <option value="$PROJECT_DIR$/resources/js/app.js" />
         <option value="$PROJECT_DIR$/resources/views/show-event.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/EventController.php" />
         <option value="$PROJECT_DIR$/resources/js/components/ShowEvent.vue" />
         <option value="$PROJECT_DIR$/app/event.php" />
         <option value="$PROJECT_DIR$/resources/js/components/EventComment.vue" />
         <option value="$PROJECT_DIR$/resources/sass/landing-page.scss" />
-        <option value="$PROJECT_DIR$/resources/views/concept.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/layout/footer.blade.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/resources/views/contact.blade.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/EventController.php" />
+        <option value="$PROJECT_DIR$/resources/views/concept.blade.php" />
       </list>
     </option>
   </component>
@@ -506,20 +509,20 @@
       <workItem from="1541154387951" duration="546000" />
       <workItem from="1541340226396" duration="15742000" />
       <workItem from="1541529159281" duration="5249000" />
-      <workItem from="1542128020226" duration="5263000" />
+      <workItem from="1542128020226" duration="5628000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39064000" />
+    <option name="totallyTimeSpent" value="39429000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.81895095" visible="true" weight="0.32618025" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.81895095" visible="true" weight="0.20529328" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="npm" order="2" sideWeight="0.18104906" side_tool="true" visible="true" weight="0.32618025" />
+      <window_info id="npm" order="2" sideWeight="0.18104906" side_tool="true" visible="true" weight="0.20529328" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
@@ -721,13 +724,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/EventController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2020">
-          <caret line="104" column="66" selection-start-line="104" selection-start-column="66" selection-end-line="104" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/show-event.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
@@ -784,13 +780,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/concept.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="60" selection-start-line="60" selection-end-line="60" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/layout/layout.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="146">
@@ -816,6 +805,24 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="9" column="24" selection-start-line="9" selection-start-column="24" selection-end-line="9" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/EventController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="25" column="28" lean-forward="true" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/concept.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="18" column="459" selection-start-line="18" selection-start-column="459" selection-end-line="18" selection-end-column="459" />
+          <folding>
+            <element signature="e#275#342#0#HTML" expanded="true" />
+            <element signature="e#1066#1132#0#HTML" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

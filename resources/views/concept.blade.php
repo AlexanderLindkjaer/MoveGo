@@ -16,7 +16,7 @@
                 <div class="col-lg-6 text-white showcase-img" style="background-image: url('img/stock/bouldering-climber.jpg');"></div>
                 <div class="col-lg-6 my-auto showcase-text">
                     <h2>Sådan gør du</h2>
-                    <p class="lead mb-0">Igennem MoveGo kan personer let melde sig til og selv oprette alverdens sportslige aktiviteter. Lad kortet inspirere dig og meld dig til spændende aktiviteter i dit nærområde. Du kan også selv oprette din egen aktivitet, som andre melde sig til. Det er helt gratis at benytte MoveGo. Det kræver blot at du opretter et brugernavn, så andre kan se at du deltager. Det kræver kun få klik at tilmelde dig en aktivitet og du har også muligheden for at framelde dig aktiviteten, hvis du fortryder.</p>
+                    <p class="lead mb-0">Igennem MoveGo kan personer let melde sig til og selv oprette alverdens sportslige aktiviteter. Lad kortet inspirere dig og meld dig til spændende aktiviteter i dit nærområde. Du kan også selv oprette din egen aktivitet, som andre kan melde sig til. Det er helt gratis at benytte MoveGo. Det kræver blot at du opretter et brugernavn, så andre kan se at du deltager. Det kræver kun få klik at tilmelde sig en aktivitet.</p>
                 </div>
             </div>
             <div class="row no-gutters">

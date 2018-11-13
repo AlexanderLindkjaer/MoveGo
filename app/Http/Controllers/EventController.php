@@ -25,7 +25,8 @@ class EventController extends Controller
 
     public function allRaw()
     {
-        return event::all();
+        $now = Carbon::now();
+        return event::whereDate('start_of_event_date', '>=', $now)->get();
     }
 
     /**
