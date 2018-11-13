@@ -9,7 +9,7 @@
                     </li>
                     <li class="list-inline-item">&sdot;</li>
                     <li class="list-inline-item">
-                        <a class="text-white" href="/kontakt">Kontakt</a>
+                        <a class="text-white" href="{{ route('contact') }}">Kontakt</a>
                     </li>
                     <li class="list-inline-item">&sdot;</li>
 

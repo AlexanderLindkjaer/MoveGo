@@ -24,3 +24,8 @@ Route::get('event/{event}', 'EventController@show');
 
 
 Route::get('/koncept', 'EventController@concept')->name('concept');
+
+
+Route::get('/kontakt', function (){
+    return view('contact');
+})->name('contact');
