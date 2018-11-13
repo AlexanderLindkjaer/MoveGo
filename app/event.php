@@ -17,5 +17,15 @@ class event extends Model
         'start_of_event_clock',
     ];
 
+    public function signups()
+    {
+        return $this->hasMany(Signup::class);
+    }
+
+    public function getNoOfSignupsAttribute()
+    {
+        return $this->signups->count();
+    }
+
 
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\event;
+use App\Signup;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -88,7 +89,22 @@ class EventController extends Controller
     public function signup(Request $request)
     {
         $event = event::find($request->id);
+
+
+        $signup = Signup::where('event_id', $event->id)->where('name', $request->name)->first();
+
+        if($signup){
+            abort(403,'Dette kaldenavn er allerede tilmeldt event');
+        }
+
         $event->increment('no_of_signups');
+
+        $signup = Signup::create([
+            'event_id' => $event->id,
+            'name' => $request->name,
+            'comment' => $request->comment ? $request->comment : ''
+        ]);
+
         return $event;
     }
 
@@ -96,7 +112,7 @@ class EventController extends Controller
     {
         $event->start_of_event_date = Carbon::parse($event->start_of_event_date)->format('Y-m-d');
         $event->start_of_event_date_pretty = Carbon::parse($event->start_of_event_date)->format('d-m-Y');
-
+        $event->load(['signups']);
         return $event;
 
     }

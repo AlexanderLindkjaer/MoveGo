@@ -14,9 +14,21 @@
         <div class="container my-3">
             <div class="row">
                 <div class="col-12">
-                    <div class="like-box text-center pointer py-2">
+                    <div class="like-box text-center pointer py-4">
                         <h4>{{event.no_of_signups}} deltager i denne aktivitet</h4>
-                        <div @click="attend" class="attend">
+                        <div class="row">
+                            <div class="col-md-12 text-center py-2">
+                                <label>Kaldenavn*</label>
+                                <br>
+                                <input placeholder="Dit deltagernavn" class="event-input" type="text" v-model="name">
+                            </div>
+                            <div class="col-md-12 text-center  py-2">
+                                <label>Kommentar</label>
+                                <br>
+                                <textarea placeholder="Skriv en kommentar til din deltagelse" class="event-input" type="text" v-model="comment"></textarea>
+                            </div>
+                        </div>
+                        <div @click="attend" class="attend pt-2">
                             <i class="fa fa-5x fa-check-circle-o" aria-hidden="true"></i>
                             <p>Deltag</p>
                         </div>
@@ -67,10 +79,17 @@
                 event: {},
                 center: { lat: 55.686723, lng: 12.5615783 },
                 zoom: 11,
+                name: '',
+                comment: ''
             }
         },
         mounted() {
             this.loadData();
+
+            if (window.location.hash === '#event-attende') {
+                toastr.success('Du deltager i begivenhed');
+                history.pushState("", document.title, window.location.pathname);
+            }
         },
         computed: {
             defaultComputed: function (){
@@ -92,18 +111,26 @@
             },
             attend()
             {
+
+                if(this.name == ''){
+                    toastr.warning('Du skal udfylde et kaldenavn')
+                    return
+                }
+
                 var data = new FormData();
                 data.append('id', this.event.id);
+                data.append('name', this.name)
+                data.append('comment', this.comment)
 
                 var self = this
 
                 axios.post('/event/signup', data)
                     .then(function (response) {
-                        toastr.success('Du deltager i '+response.data.headline)
-                        self.event.no_of_signups = self.event.no_of_signups+1
+                        window.location.href = '/event/'+self.event.id+'#event-attende'
+                        location.reload()
                     })
                     .catch(function (response) {
-                        toastr.error('Something went wrong')
+                        toastr.error('Dette kaldenavn er allerede tilmeldt event')
                     });
 
             }
@@ -115,6 +142,11 @@
 
     .vue-google-map{
         height: 300px;
+    }
+
+    .event-input{
+        border: 1px solid lightgrey;
+        border-radius: 5px;
     }
 
 

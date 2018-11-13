@@ -52,7 +52,7 @@
                     <div class="testimonial-item mx-auto mb-5 mb-lg-0">
                         <img class="img-fluid rounded-circle mb-3" src="img/people/mads.jpg" alt="">
                         <h5>Mads</h5>
-                        <p class="font-weight-light mb-0">"En rigtigt god måde at være både social og aktiv"</p>
+                        <p class="font-weight-light mb-0">"En rigtig god måde at være både social og aktiv"</p>
                     </div>
                 </div>
             </div>

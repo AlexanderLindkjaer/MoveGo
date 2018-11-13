@@ -2,7 +2,6 @@
     <div class="full-map-container">
         <googlemaps-map :center.sync="center" :zoom.sync="zoom">
 
-
             <googlemaps-marker
                     v-for="marker of events"
                     :key="marker.id"
@@ -42,7 +41,7 @@
         data() {
             return {
                 center: { lat: 55.686723, lng: 12.5615783 },
-                zoom: 11,
+                zoom: 12,
                 mapOptions: {},
                 events: {},
                 currentmarker: null,

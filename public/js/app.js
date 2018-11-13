@@ -1675,14 +1675,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: [],
     data: function data() {
         return {
             center: { lat: 55.686723, lng: 12.5615783 },
-            zoom: 11,
+            zoom: 12,
             mapOptions: {},
             events: {},
             currentmarker: null,
@@ -1931,6 +1930,66 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/EventComment.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['event_id'],
+    data: function data() {
+        return {
+            event: {}
+        };
+    },
+    mounted: function mounted() {
+        this.loadData();
+    },
+
+    computed: {
+        defaultComputed: function defaultComputed() {
+            return '';
+        }
+    },
+    methods: {
+        loadData: function loadData() {
+            var self = this;
+
+            axios.get('/event/raw/' + this.event_id).then(function (response) {
+                self.event = response.data;
+            });
+        }
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/EventsComponent.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2037,6 +2096,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['event_id'],
@@ -2044,11 +2115,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             event: {},
             center: { lat: 55.686723, lng: 12.5615783 },
-            zoom: 11
+            zoom: 11,
+            name: '',
+            comment: ''
         };
     },
     mounted: function mounted() {
         this.loadData();
+
+        if (window.location.hash === '#event-attende') {
+            toastr.success('Du deltager i begivenhed');
+            history.pushState("", document.title, window.location.pathname);
+        }
     },
 
     computed: {
@@ -2069,16 +2147,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return { lat: Number(marker.lat), lng: Number(marker.long) };
         },
         attend: function attend() {
+
+            if (this.name == '') {
+                toastr.warning('Du skal udfylde et kaldenavn');
+                return;
+            }
+
             var data = new FormData();
             data.append('id', this.event.id);
+            data.append('name', this.name);
+            data.append('comment', this.comment);
 
             var self = this;
 
             axios.post('/event/signup', data).then(function (response) {
-                toastr.success('Du deltager i ' + response.data.headline);
-                self.event.no_of_signups = self.event.no_of_signups + 1;
+                window.location.href = '/event/' + self.event.id + '#event-attende';
+                location.reload();
             }).catch(function (response) {
-                toastr.error('Something went wrong');
+                toastr.error('Dette kaldenavn er allerede tilmeldt event');
             });
         }
     }
@@ -6103,7 +6189,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.vue-google-map[data-v-09609142]{\n    height: 300px;\n}\n\n\n", ""]);
+exports.push([module.i, "\n.vue-google-map[data-v-09609142]{\n    height: 300px;\n}\n.event-input[data-v-09609142]{\n    border: 1px solid lightgrey;\n    border-radius: 5px;\n}\n\n\n", ""]);
 
 // exports
 
@@ -6149,6 +6235,21 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 // module
 exports.push([module.i, "\n.vue-google-map[data-v-67a08779]{\n    height: 300px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6adae860\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/components/EventComment.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.attende-name{\n}\n.attende-comment{\n}\n.attende{\n    background-color: #f2f2f2;\n    -webkit-box-shadow: 5px solid black;\n    box-shadow: 5px solid black;\n    border-radius: 10px;\n    margin: 15px;\n    padding: 15px;\n}\n\n", ""]);
 
 // exports
 
@@ -41232,21 +41333,86 @@ var render = function() {
     _c("div", { staticClass: "container my-3" }, [
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-12" }, [
-          _c("div", { staticClass: "like-box text-center pointer py-2" }, [
+          _c("div", { staticClass: "like-box text-center pointer py-4" }, [
             _c("h4", [
               _vm._v(
                 _vm._s(_vm.event.no_of_signups) + " deltager i denne aktivitet"
               )
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "attend", on: { click: _vm.attend } }, [
-              _c("i", {
-                staticClass: "fa fa-5x fa-check-circle-o",
-                attrs: { "aria-hidden": "true" }
-              }),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-12 text-center py-2" }, [
+                _c("label", [_vm._v("Kaldenavn*")]),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.name,
+                      expression: "name"
+                    }
+                  ],
+                  staticClass: "event-input",
+                  attrs: { placeholder: "Dit deltagernavn", type: "text" },
+                  domProps: { value: _vm.name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.name = $event.target.value
+                    }
+                  }
+                })
+              ]),
               _vm._v(" "),
-              _c("p", [_vm._v("Deltag")])
-            ])
+              _c("div", { staticClass: "col-md-12 text-center  py-2" }, [
+                _c("label", [_vm._v("Kommentar")]),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.comment,
+                      expression: "comment"
+                    }
+                  ],
+                  staticClass: "event-input",
+                  attrs: {
+                    placeholder: "Skriv en kommentar til din deltagelse",
+                    type: "text"
+                  },
+                  domProps: { value: _vm.comment },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.comment = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "attend pt-2", on: { click: _vm.attend } },
+              [
+                _c("i", {
+                  staticClass: "fa fa-5x fa-check-circle-o",
+                  attrs: { "aria-hidden": "true" }
+                }),
+                _vm._v(" "),
+                _c("p", [_vm._v("Deltag")])
+              ]
+            )
           ])
         ])
       ]),
@@ -41686,6 +41852,60 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-6adae860\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/EventComment.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "container my-3" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-12" }, [
+          _c(
+            "div",
+            { staticClass: "like-box p-2" },
+            [
+              _c("h2", { staticClass: "text-center" }, [_vm._v("Deltagere")]),
+              _vm._v(" "),
+              _vm._l(_vm.event.signups, function(signup) {
+                return _c("div", { staticClass: "attende" }, [
+                  _c("div", { staticClass: "attende-name" }, [
+                    _c("h4", [_vm._v(_vm._s(signup.name))])
+                  ]),
+                  _vm._v(" "),
+                  signup.comment
+                    ? _c("div", { staticClass: "attende-comment" }, [
+                        _vm._v(
+                          "\n                           " +
+                            _vm._s(signup.comment) +
+                            "\n                       "
+                        )
+                      ])
+                    : _vm._e()
+                ])
+              })
+            ],
+            2
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6adae860", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-ed066554\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/SingleEventComponent.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -41827,6 +42047,33 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-67a08779\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CreateEditEvent.vue", function() {
      var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-67a08779\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CreateEditEvent.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6adae860\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/components/EventComment.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6adae860\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/components/EventComment.vue");
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("ee35599e", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6adae860\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./EventComment.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6adae860\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./EventComment.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -53196,6 +53443,7 @@ Vue.component('single-event', __webpack_require__("./resources/js/components/Sin
 Vue.component('events-map', __webpack_require__("./resources/js/components/AllEventsMap.vue"));
 Vue.component('create-edit-event', __webpack_require__("./resources/js/components/CreateEditEvent.vue"));
 Vue.component('show-event', __webpack_require__("./resources/js/components/ShowEvent.vue"));
+Vue.component('event-comments', __webpack_require__("./resources/js/components/EventComment.vue"));
 
 // import * as VueGoogleMaps from "vue2-google-maps";
 //
@@ -53386,6 +53634,58 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-67a08779", Component.options)
   } else {
     hotAPI.reload("data-v-67a08779", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/js/components/EventComment.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6adae860\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/components/EventComment.vue")
+}
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/EventComment.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-6adae860\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/EventComment.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/EventComment.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6adae860", Component.options)
+  } else {
+    hotAPI.reload("data-v-6adae860", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
