@@ -20,12 +20,11 @@ $('document').ready(function () {
                 'i nærheden af dig',
                 'når det skal være sjovt',
                 'når det skal være socialt',
-                'når det skal være nyt',
                 'som det passer dig'
 
             ],
             typeSpeed: 50,
-            backSpeed: 50,
+            backSpeed: 25,
             backDelay: 500,
             startDelay: 1000,
             smartBackspace: true,

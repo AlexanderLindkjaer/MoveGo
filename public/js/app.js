@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 16);
+/******/ 	return __webpack_require__(__webpack_require__.s = 17);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -70,8 +70,8 @@
 "use strict";
 
 
-var bind = __webpack_require__(9);
-var isBuffer = __webpack_require__(25);
+var bind = __webpack_require__(10);
+var isBuffer = __webpack_require__(26);
 
 /*global toString:true*/
 
@@ -502,7 +502,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(50)
+var listToStyles = __webpack_require__(51)
 
 /*
 type StyleObject = {
@@ -11194,11 +11194,1061 @@ return jQuery;
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
+/*!
+ * 
+ *   typed.js - A JavaScript Typing Animation Library
+ *   Author: Matt Boldt <me@mattboldt.com>
+ *   Version: v2.0.9
+ *   Url: https://github.com/mattboldt/typed.js
+ *   License(s): MIT
+ * 
+ */
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["Typed"] = factory();
+	else
+		root["Typed"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+/******/
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			exports: {},
+/******/ 			id: moduleId,
+/******/ 			loaded: false
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+	var _initializerJs = __webpack_require__(1);
+	
+	var _htmlParserJs = __webpack_require__(3);
+	
+	/**
+	 * Welcome to Typed.js!
+	 * @param {string} elementId HTML element ID _OR_ HTML element
+	 * @param {object} options options object
+	 * @returns {object} a new Typed object
+	 */
+	
+	var Typed = (function () {
+	  function Typed(elementId, options) {
+	    _classCallCheck(this, Typed);
+	
+	    // Initialize it up
+	    _initializerJs.initializer.load(this, options, elementId);
+	    // All systems go!
+	    this.begin();
+	  }
+	
+	  /**
+	   * Toggle start() and stop() of the Typed instance
+	   * @public
+	   */
+	
+	  _createClass(Typed, [{
+	    key: 'toggle',
+	    value: function toggle() {
+	      this.pause.status ? this.start() : this.stop();
+	    }
+	
+	    /**
+	     * Stop typing / backspacing and enable cursor blinking
+	     * @public
+	     */
+	  }, {
+	    key: 'stop',
+	    value: function stop() {
+	      if (this.typingComplete) return;
+	      if (this.pause.status) return;
+	      this.toggleBlinking(true);
+	      this.pause.status = true;
+	      this.options.onStop(this.arrayPos, this);
+	    }
+	
+	    /**
+	     * Start typing / backspacing after being stopped
+	     * @public
+	     */
+	  }, {
+	    key: 'start',
+	    value: function start() {
+	      if (this.typingComplete) return;
+	      if (!this.pause.status) return;
+	      this.pause.status = false;
+	      if (this.pause.typewrite) {
+	        this.typewrite(this.pause.curString, this.pause.curStrPos);
+	      } else {
+	        this.backspace(this.pause.curString, this.pause.curStrPos);
+	      }
+	      this.options.onStart(this.arrayPos, this);
+	    }
+	
+	    /**
+	     * Destroy this instance of Typed
+	     * @public
+	     */
+	  }, {
+	    key: 'destroy',
+	    value: function destroy() {
+	      this.reset(false);
+	      this.options.onDestroy(this);
+	    }
+	
+	    /**
+	     * Reset Typed and optionally restarts
+	     * @param {boolean} restart
+	     * @public
+	     */
+	  }, {
+	    key: 'reset',
+	    value: function reset() {
+	      var restart = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
+	
+	      clearInterval(this.timeout);
+	      this.replaceText('');
+	      if (this.cursor && this.cursor.parentNode) {
+	        this.cursor.parentNode.removeChild(this.cursor);
+	        this.cursor = null;
+	      }
+	      this.strPos = 0;
+	      this.arrayPos = 0;
+	      this.curLoop = 0;
+	      if (restart) {
+	        this.insertCursor();
+	        this.options.onReset(this);
+	        this.begin();
+	      }
+	    }
+	
+	    /**
+	     * Begins the typing animation
+	     * @private
+	     */
+	  }, {
+	    key: 'begin',
+	    value: function begin() {
+	      var _this = this;
+	
+	      this.typingComplete = false;
+	      this.shuffleStringsIfNeeded(this);
+	      this.insertCursor();
+	      if (this.bindInputFocusEvents) this.bindFocusEvents();
+	      this.timeout = setTimeout(function () {
+	        // Check if there is some text in the element, if yes start by backspacing the default message
+	        if (!_this.currentElContent || _this.currentElContent.length === 0) {
+	          _this.typewrite(_this.strings[_this.sequence[_this.arrayPos]], _this.strPos);
+	        } else {
+	          // Start typing
+	          _this.backspace(_this.currentElContent, _this.currentElContent.length);
+	        }
+	      }, this.startDelay);
+	    }
+	
+	    /**
+	     * Called for each character typed
+	     * @param {string} curString the current string in the strings array
+	     * @param {number} curStrPos the current position in the curString
+	     * @private
+	     */
+	  }, {
+	    key: 'typewrite',
+	    value: function typewrite(curString, curStrPos) {
+	      var _this2 = this;
+	
+	      if (this.fadeOut && this.el.classList.contains(this.fadeOutClass)) {
+	        this.el.classList.remove(this.fadeOutClass);
+	        if (this.cursor) this.cursor.classList.remove(this.fadeOutClass);
+	      }
+	
+	      var humanize = this.humanizer(this.typeSpeed);
+	      var numChars = 1;
+	
+	      if (this.pause.status === true) {
+	        this.setPauseStatus(curString, curStrPos, true);
+	        return;
+	      }
+	
+	      // contain typing function in a timeout humanize'd delay
+	      this.timeout = setTimeout(function () {
+	        // skip over any HTML chars
+	        curStrPos = _htmlParserJs.htmlParser.typeHtmlChars(curString, curStrPos, _this2);
+	
+	        var pauseTime = 0;
+	        var substr = curString.substr(curStrPos);
+	        // check for an escape character before a pause value
+	        // format: \^\d+ .. eg: ^1000 .. should be able to print the ^ too using ^^
+	        // single ^ are removed from string
+	        if (substr.charAt(0) === '^') {
+	          if (/^\^\d+/.test(substr)) {
+	            var skip = 1; // skip at least 1
+	            substr = /\d+/.exec(substr)[0];
+	            skip += substr.length;
+	            pauseTime = parseInt(substr);
+	            _this2.temporaryPause = true;
+	            _this2.options.onTypingPaused(_this2.arrayPos, _this2);
+	            // strip out the escape character and pause value so they're not printed
+	            curString = curString.substring(0, curStrPos) + curString.substring(curStrPos + skip);
+	            _this2.toggleBlinking(true);
+	          }
+	        }
+	
+	        // check for skip characters formatted as
+	        // "this is a `string to print NOW` ..."
+	        if (substr.charAt(0) === '`') {
+	          while (curString.substr(curStrPos + numChars).charAt(0) !== '`') {
+	            numChars++;
+	            if (curStrPos + numChars > curString.length) break;
+	          }
+	          // strip out the escape characters and append all the string in between
+	          var stringBeforeSkip = curString.substring(0, curStrPos);
+	          var stringSkipped = curString.substring(stringBeforeSkip.length + 1, curStrPos + numChars);
+	          var stringAfterSkip = curString.substring(curStrPos + numChars + 1);
+	          curString = stringBeforeSkip + stringSkipped + stringAfterSkip;
+	          numChars--;
+	        }
+	
+	        // timeout for any pause after a character
+	        _this2.timeout = setTimeout(function () {
+	          // Accounts for blinking while paused
+	          _this2.toggleBlinking(false);
+	
+	          // We're done with this sentence!
+	          if (curStrPos === curString.length) {
+	            _this2.doneTyping(curString, curStrPos);
+	          } else {
+	            _this2.keepTyping(curString, curStrPos, numChars);
+	          }
+	          // end of character pause
+	          if (_this2.temporaryPause) {
+	            _this2.temporaryPause = false;
+	            _this2.options.onTypingResumed(_this2.arrayPos, _this2);
+	          }
+	        }, pauseTime);
+	
+	        // humanized value for typing
+	      }, humanize);
+	    }
+	
+	    /**
+	     * Continue to the next string & begin typing
+	     * @param {string} curString the current string in the strings array
+	     * @param {number} curStrPos the current position in the curString
+	     * @private
+	     */
+	  }, {
+	    key: 'keepTyping',
+	    value: function keepTyping(curString, curStrPos, numChars) {
+	      // call before functions if applicable
+	      if (curStrPos === 0) {
+	        this.toggleBlinking(false);
+	        this.options.preStringTyped(this.arrayPos, this);
+	      }
+	      // start typing each new char into existing string
+	      // curString: arg, this.el.html: original text inside element
+	      curStrPos += numChars;
+	      var nextString = curString.substr(0, curStrPos);
+	      this.replaceText(nextString);
+	      // loop the function
+	      this.typewrite(curString, curStrPos);
+	    }
+	
+	    /**
+	     * We're done typing all strings
+	     * @param {string} curString the current string in the strings array
+	     * @param {number} curStrPos the current position in the curString
+	     * @private
+	     */
+	  }, {
+	    key: 'doneTyping',
+	    value: function doneTyping(curString, curStrPos) {
+	      var _this3 = this;
+	
+	      // fires callback function
+	      this.options.onStringTyped(this.arrayPos, this);
+	      this.toggleBlinking(true);
+	      // is this the final string
+	      if (this.arrayPos === this.strings.length - 1) {
+	        // callback that occurs on the last typed string
+	        this.complete();
+	        // quit if we wont loop back
+	        if (this.loop === false || this.curLoop === this.loopCount) {
+	          return;
+	        }
+	      }
+	      this.timeout = setTimeout(function () {
+	        _this3.backspace(curString, curStrPos);
+	      }, this.backDelay);
+	    }
+	
+	    /**
+	     * Backspaces 1 character at a time
+	     * @param {string} curString the current string in the strings array
+	     * @param {number} curStrPos the current position in the curString
+	     * @private
+	     */
+	  }, {
+	    key: 'backspace',
+	    value: function backspace(curString, curStrPos) {
+	      var _this4 = this;
+	
+	      if (this.pause.status === true) {
+	        this.setPauseStatus(curString, curStrPos, true);
+	        return;
+	      }
+	      if (this.fadeOut) return this.initFadeOut();
+	
+	      this.toggleBlinking(false);
+	      var humanize = this.humanizer(this.backSpeed);
+	
+	      this.timeout = setTimeout(function () {
+	        curStrPos = _htmlParserJs.htmlParser.backSpaceHtmlChars(curString, curStrPos, _this4);
+	        // replace text with base text + typed characters
+	        var curStringAtPosition = curString.substr(0, curStrPos);
+	        _this4.replaceText(curStringAtPosition);
+	
+	        // if smartBack is enabled
+	        if (_this4.smartBackspace) {
+	          // the remaining part of the current string is equal of the same part of the new string
+	          var nextString = _this4.strings[_this4.arrayPos + 1];
+	          if (nextString && curStringAtPosition === nextString.substr(0, curStrPos)) {
+	            _this4.stopNum = curStrPos;
+	          } else {
+	            _this4.stopNum = 0;
+	          }
+	        }
+	
+	        // if the number (id of character in current string) is
+	        // less than the stop number, keep going
+	        if (curStrPos > _this4.stopNum) {
+	          // subtract characters one by one
+	          curStrPos--;
+	          // loop the function
+	          _this4.backspace(curString, curStrPos);
+	        } else if (curStrPos <= _this4.stopNum) {
+	          // if the stop number has been reached, increase
+	          // array position to next string
+	          _this4.arrayPos++;
+	          // When looping, begin at the beginning after backspace complete
+	          if (_this4.arrayPos === _this4.strings.length) {
+	            _this4.arrayPos = 0;
+	            _this4.options.onLastStringBackspaced();
+	            _this4.shuffleStringsIfNeeded();
+	            _this4.begin();
+	          } else {
+	            _this4.typewrite(_this4.strings[_this4.sequence[_this4.arrayPos]], curStrPos);
+	          }
+	        }
+	        // humanized value for typing
+	      }, humanize);
+	    }
+	
+	    /**
+	     * Full animation is complete
+	     * @private
+	     */
+	  }, {
+	    key: 'complete',
+	    value: function complete() {
+	      this.options.onComplete(this);
+	      if (this.loop) {
+	        this.curLoop++;
+	      } else {
+	        this.typingComplete = true;
+	      }
+	    }
+	
+	    /**
+	     * Has the typing been stopped
+	     * @param {string} curString the current string in the strings array
+	     * @param {number} curStrPos the current position in the curString
+	     * @param {boolean} isTyping
+	     * @private
+	     */
+	  }, {
+	    key: 'setPauseStatus',
+	    value: function setPauseStatus(curString, curStrPos, isTyping) {
+	      this.pause.typewrite = isTyping;
+	      this.pause.curString = curString;
+	      this.pause.curStrPos = curStrPos;
+	    }
+	
+	    /**
+	     * Toggle the blinking cursor
+	     * @param {boolean} isBlinking
+	     * @private
+	     */
+	  }, {
+	    key: 'toggleBlinking',
+	    value: function toggleBlinking(isBlinking) {
+	      if (!this.cursor) return;
+	      // if in paused state, don't toggle blinking a 2nd time
+	      if (this.pause.status) return;
+	      if (this.cursorBlinking === isBlinking) return;
+	      this.cursorBlinking = isBlinking;
+	      if (isBlinking) {
+	        this.cursor.classList.add('typed-cursor--blink');
+	      } else {
+	        this.cursor.classList.remove('typed-cursor--blink');
+	      }
+	    }
+	
+	    /**
+	     * Speed in MS to type
+	     * @param {number} speed
+	     * @private
+	     */
+	  }, {
+	    key: 'humanizer',
+	    value: function humanizer(speed) {
+	      return Math.round(Math.random() * speed / 2) + speed;
+	    }
+	
+	    /**
+	     * Shuffle the sequence of the strings array
+	     * @private
+	     */
+	  }, {
+	    key: 'shuffleStringsIfNeeded',
+	    value: function shuffleStringsIfNeeded() {
+	      if (!this.shuffle) return;
+	      this.sequence = this.sequence.sort(function () {
+	        return Math.random() - 0.5;
+	      });
+	    }
+	
+	    /**
+	     * Adds a CSS class to fade out current string
+	     * @private
+	     */
+	  }, {
+	    key: 'initFadeOut',
+	    value: function initFadeOut() {
+	      var _this5 = this;
+	
+	      this.el.className += ' ' + this.fadeOutClass;
+	      if (this.cursor) this.cursor.className += ' ' + this.fadeOutClass;
+	      return setTimeout(function () {
+	        _this5.arrayPos++;
+	        _this5.replaceText('');
+	
+	        // Resets current string if end of loop reached
+	        if (_this5.strings.length > _this5.arrayPos) {
+	          _this5.typewrite(_this5.strings[_this5.sequence[_this5.arrayPos]], 0);
+	        } else {
+	          _this5.typewrite(_this5.strings[0], 0);
+	          _this5.arrayPos = 0;
+	        }
+	      }, this.fadeOutDelay);
+	    }
+	
+	    /**
+	     * Replaces current text in the HTML element
+	     * depending on element type
+	     * @param {string} str
+	     * @private
+	     */
+	  }, {
+	    key: 'replaceText',
+	    value: function replaceText(str) {
+	      if (this.attr) {
+	        this.el.setAttribute(this.attr, str);
+	      } else {
+	        if (this.isInput) {
+	          this.el.value = str;
+	        } else if (this.contentType === 'html') {
+	          this.el.innerHTML = str;
+	        } else {
+	          this.el.textContent = str;
+	        }
+	      }
+	    }
+	
+	    /**
+	     * If using input elements, bind focus in order to
+	     * start and stop the animation
+	     * @private
+	     */
+	  }, {
+	    key: 'bindFocusEvents',
+	    value: function bindFocusEvents() {
+	      var _this6 = this;
+	
+	      if (!this.isInput) return;
+	      this.el.addEventListener('focus', function (e) {
+	        _this6.stop();
+	      });
+	      this.el.addEventListener('blur', function (e) {
+	        if (_this6.el.value && _this6.el.value.length !== 0) {
+	          return;
+	        }
+	        _this6.start();
+	      });
+	    }
+	
+	    /**
+	     * On init, insert the cursor element
+	     * @private
+	     */
+	  }, {
+	    key: 'insertCursor',
+	    value: function insertCursor() {
+	      if (!this.showCursor) return;
+	      if (this.cursor) return;
+	      this.cursor = document.createElement('span');
+	      this.cursor.className = 'typed-cursor';
+	      this.cursor.innerHTML = this.cursorChar;
+	      this.el.parentNode && this.el.parentNode.insertBefore(this.cursor, this.el.nextSibling);
+	    }
+	  }]);
+	
+	  return Typed;
+	})();
+	
+	exports['default'] = Typed;
+	module.exports = exports['default'];
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+	var _defaultsJs = __webpack_require__(2);
+	
+	var _defaultsJs2 = _interopRequireDefault(_defaultsJs);
+	
+	/**
+	 * Initialize the Typed object
+	 */
+	
+	var Initializer = (function () {
+	  function Initializer() {
+	    _classCallCheck(this, Initializer);
+	  }
+	
+	  _createClass(Initializer, [{
+	    key: 'load',
+	
+	    /**
+	     * Load up defaults & options on the Typed instance
+	     * @param {Typed} self instance of Typed
+	     * @param {object} options options object
+	     * @param {string} elementId HTML element ID _OR_ instance of HTML element
+	     * @private
+	     */
+	
+	    value: function load(self, options, elementId) {
+	      // chosen element to manipulate text
+	      if (typeof elementId === 'string') {
+	        self.el = document.querySelector(elementId);
+	      } else {
+	        self.el = elementId;
+	      }
+	
+	      self.options = _extends({}, _defaultsJs2['default'], options);
+	
+	      // attribute to type into
+	      self.isInput = self.el.tagName.toLowerCase() === 'input';
+	      self.attr = self.options.attr;
+	      self.bindInputFocusEvents = self.options.bindInputFocusEvents;
+	
+	      // show cursor
+	      self.showCursor = self.isInput ? false : self.options.showCursor;
+	
+	      // custom cursor
+	      self.cursorChar = self.options.cursorChar;
+	
+	      // Is the cursor blinking
+	      self.cursorBlinking = true;
+	
+	      // text content of element
+	      self.elContent = self.attr ? self.el.getAttribute(self.attr) : self.el.textContent;
+	
+	      // html or plain text
+	      self.contentType = self.options.contentType;
+	
+	      // typing speed
+	      self.typeSpeed = self.options.typeSpeed;
+	
+	      // add a delay before typing starts
+	      self.startDelay = self.options.startDelay;
+	
+	      // backspacing speed
+	      self.backSpeed = self.options.backSpeed;
+	
+	      // only backspace what doesn't match the previous string
+	      self.smartBackspace = self.options.smartBackspace;
+	
+	      // amount of time to wait before backspacing
+	      self.backDelay = self.options.backDelay;
+	
+	      // Fade out instead of backspace
+	      self.fadeOut = self.options.fadeOut;
+	      self.fadeOutClass = self.options.fadeOutClass;
+	      self.fadeOutDelay = self.options.fadeOutDelay;
+	
+	      // variable to check whether typing is currently paused
+	      self.isPaused = false;
+	
+	      // input strings of text
+	      self.strings = self.options.strings.map(function (s) {
+	        return s.trim();
+	      });
+	
+	      // div containing strings
+	      if (typeof self.options.stringsElement === 'string') {
+	        self.stringsElement = document.querySelector(self.options.stringsElement);
+	      } else {
+	        self.stringsElement = self.options.stringsElement;
+	      }
+	
+	      if (self.stringsElement) {
+	        self.strings = [];
+	        self.stringsElement.style.display = 'none';
+	        var strings = Array.prototype.slice.apply(self.stringsElement.children);
+	        var stringsLength = strings.length;
+	
+	        if (stringsLength) {
+	          for (var i = 0; i < stringsLength; i += 1) {
+	            var stringEl = strings[i];
+	            self.strings.push(stringEl.innerHTML.trim());
+	          }
+	        }
+	      }
+	
+	      // character number position of current string
+	      self.strPos = 0;
+	
+	      // current array position
+	      self.arrayPos = 0;
+	
+	      // index of string to stop backspacing on
+	      self.stopNum = 0;
+	
+	      // Looping logic
+	      self.loop = self.options.loop;
+	      self.loopCount = self.options.loopCount;
+	      self.curLoop = 0;
+	
+	      // shuffle the strings
+	      self.shuffle = self.options.shuffle;
+	      // the order of strings
+	      self.sequence = [];
+	
+	      self.pause = {
+	        status: false,
+	        typewrite: true,
+	        curString: '',
+	        curStrPos: 0
+	      };
+	
+	      // When the typing is complete (when not looped)
+	      self.typingComplete = false;
+	
+	      // Set the order in which the strings are typed
+	      for (var i in self.strings) {
+	        self.sequence[i] = i;
+	      }
+	
+	      // If there is some text in the element
+	      self.currentElContent = this.getCurrentElContent(self);
+	
+	      self.autoInsertCss = self.options.autoInsertCss;
+	
+	      this.appendAnimationCss(self);
+	    }
+	  }, {
+	    key: 'getCurrentElContent',
+	    value: function getCurrentElContent(self) {
+	      var elContent = '';
+	      if (self.attr) {
+	        elContent = self.el.getAttribute(self.attr);
+	      } else if (self.isInput) {
+	        elContent = self.el.value;
+	      } else if (self.contentType === 'html') {
+	        elContent = self.el.innerHTML;
+	      } else {
+	        elContent = self.el.textContent;
+	      }
+	      return elContent;
+	    }
+	  }, {
+	    key: 'appendAnimationCss',
+	    value: function appendAnimationCss(self) {
+	      var cssDataName = 'data-typed-js-css';
+	      if (!self.autoInsertCss) {
+	        return;
+	      }
+	      if (!self.showCursor && !self.fadeOut) {
+	        return;
+	      }
+	      if (document.querySelector('[' + cssDataName + ']')) {
+	        return;
+	      }
+	
+	      var css = document.createElement('style');
+	      css.type = 'text/css';
+	      css.setAttribute(cssDataName, true);
+	
+	      var innerCss = '';
+	      if (self.showCursor) {
+	        innerCss += '\n        .typed-cursor{\n          opacity: 1;\n        }\n        .typed-cursor.typed-cursor--blink{\n          animation: typedjsBlink 0.7s infinite;\n          -webkit-animation: typedjsBlink 0.7s infinite;\n                  animation: typedjsBlink 0.7s infinite;\n        }\n        @keyframes typedjsBlink{\n          50% { opacity: 0.0; }\n        }\n        @-webkit-keyframes typedjsBlink{\n          0% { opacity: 1; }\n          50% { opacity: 0.0; }\n          100% { opacity: 1; }\n        }\n      ';
+	      }
+	      if (self.fadeOut) {
+	        innerCss += '\n        .typed-fade-out{\n          opacity: 0;\n          transition: opacity .25s;\n        }\n        .typed-cursor.typed-cursor--blink.typed-fade-out{\n          -webkit-animation: 0;\n          animation: 0;\n        }\n      ';
+	      }
+	      if (css.length === 0) {
+	        return;
+	      }
+	      css.innerHTML = innerCss;
+	      document.body.appendChild(css);
+	    }
+	  }]);
+	
+	  return Initializer;
+	})();
+	
+	exports['default'] = Initializer;
+	var initializer = new Initializer();
+	exports.initializer = initializer;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+	/**
+	 * Defaults & options
+	 * @returns {object} Typed defaults & options
+	 * @public
+	 */
+	
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	var defaults = {
+	  /**
+	   * @property {array} strings strings to be typed
+	   * @property {string} stringsElement ID of element containing string children
+	   */
+	  strings: ['These are the default values...', 'You know what you should do?', 'Use your own!', 'Have a great day!'],
+	  stringsElement: null,
+	
+	  /**
+	   * @property {number} typeSpeed type speed in milliseconds
+	   */
+	  typeSpeed: 0,
+	
+	  /**
+	   * @property {number} startDelay time before typing starts in milliseconds
+	   */
+	  startDelay: 0,
+	
+	  /**
+	   * @property {number} backSpeed backspacing speed in milliseconds
+	   */
+	  backSpeed: 0,
+	
+	  /**
+	   * @property {boolean} smartBackspace only backspace what doesn't match the previous string
+	   */
+	  smartBackspace: true,
+	
+	  /**
+	   * @property {boolean} shuffle shuffle the strings
+	   */
+	  shuffle: false,
+	
+	  /**
+	   * @property {number} backDelay time before backspacing in milliseconds
+	   */
+	  backDelay: 700,
+	
+	  /**
+	   * @property {boolean} fadeOut Fade out instead of backspace
+	   * @property {string} fadeOutClass css class for fade animation
+	   * @property {boolean} fadeOutDelay Fade out delay in milliseconds
+	   */
+	  fadeOut: false,
+	  fadeOutClass: 'typed-fade-out',
+	  fadeOutDelay: 500,
+	
+	  /**
+	   * @property {boolean} loop loop strings
+	   * @property {number} loopCount amount of loops
+	   */
+	  loop: false,
+	  loopCount: Infinity,
+	
+	  /**
+	   * @property {boolean} showCursor show cursor
+	   * @property {string} cursorChar character for cursor
+	   * @property {boolean} autoInsertCss insert CSS for cursor and fadeOut into HTML <head>
+	   */
+	  showCursor: true,
+	  cursorChar: '|',
+	  autoInsertCss: true,
+	
+	  /**
+	   * @property {string} attr attribute for typing
+	   * Ex: input placeholder, value, or just HTML text
+	   */
+	  attr: null,
+	
+	  /**
+	   * @property {boolean} bindInputFocusEvents bind to focus and blur if el is text input
+	   */
+	  bindInputFocusEvents: false,
+	
+	  /**
+	   * @property {string} contentType 'html' or 'null' for plaintext
+	   */
+	  contentType: 'html',
+	
+	  /**
+	   * All typing is complete
+	   * @param {Typed} self
+	   */
+	  onComplete: function onComplete(self) {},
+	
+	  /**
+	   * Before each string is typed
+	   * @param {number} arrayPos
+	   * @param {Typed} self
+	   */
+	  preStringTyped: function preStringTyped(arrayPos, self) {},
+	
+	  /**
+	   * After each string is typed
+	   * @param {number} arrayPos
+	   * @param {Typed} self
+	   */
+	  onStringTyped: function onStringTyped(arrayPos, self) {},
+	
+	  /**
+	   * During looping, after last string is typed
+	   * @param {Typed} self
+	   */
+	  onLastStringBackspaced: function onLastStringBackspaced(self) {},
+	
+	  /**
+	   * Typing has been stopped
+	   * @param {number} arrayPos
+	   * @param {Typed} self
+	   */
+	  onTypingPaused: function onTypingPaused(arrayPos, self) {},
+	
+	  /**
+	   * Typing has been started after being stopped
+	   * @param {number} arrayPos
+	   * @param {Typed} self
+	   */
+	  onTypingResumed: function onTypingResumed(arrayPos, self) {},
+	
+	  /**
+	   * After reset
+	   * @param {Typed} self
+	   */
+	  onReset: function onReset(self) {},
+	
+	  /**
+	   * After stop
+	   * @param {number} arrayPos
+	   * @param {Typed} self
+	   */
+	  onStop: function onStop(arrayPos, self) {},
+	
+	  /**
+	   * After start
+	   * @param {number} arrayPos
+	   * @param {Typed} self
+	   */
+	  onStart: function onStart(arrayPos, self) {},
+	
+	  /**
+	   * After destroy
+	   * @param {Typed} self
+	   */
+	  onDestroy: function onDestroy(self) {}
+	};
+	
+	exports['default'] = defaults;
+	module.exports = exports['default'];
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+	
+	/**
+	 * TODO: These methods can probably be combined somehow
+	 * Parse HTML tags & HTML Characters
+	 */
+	
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+	var HTMLParser = (function () {
+	  function HTMLParser() {
+	    _classCallCheck(this, HTMLParser);
+	  }
+	
+	  _createClass(HTMLParser, [{
+	    key: 'typeHtmlChars',
+	
+	    /**
+	     * Type HTML tags & HTML Characters
+	     * @param {string} curString Current string
+	     * @param {number} curStrPos Position in current string
+	     * @param {Typed} self instance of Typed
+	     * @returns {number} a new string position
+	     * @private
+	     */
+	
+	    value: function typeHtmlChars(curString, curStrPos, self) {
+	      if (self.contentType !== 'html') return curStrPos;
+	      var curChar = curString.substr(curStrPos).charAt(0);
+	      if (curChar === '<' || curChar === '&') {
+	        var endTag = '';
+	        if (curChar === '<') {
+	          endTag = '>';
+	        } else {
+	          endTag = ';';
+	        }
+	        while (curString.substr(curStrPos + 1).charAt(0) !== endTag) {
+	          curStrPos++;
+	          if (curStrPos + 1 > curString.length) {
+	            break;
+	          }
+	        }
+	        curStrPos++;
+	      }
+	      return curStrPos;
+	    }
+	
+	    /**
+	     * Backspace HTML tags and HTML Characters
+	     * @param {string} curString Current string
+	     * @param {number} curStrPos Position in current string
+	     * @param {Typed} self instance of Typed
+	     * @returns {number} a new string position
+	     * @private
+	     */
+	  }, {
+	    key: 'backSpaceHtmlChars',
+	    value: function backSpaceHtmlChars(curString, curStrPos, self) {
+	      if (self.contentType !== 'html') return curStrPos;
+	      var curChar = curString.substr(curStrPos).charAt(0);
+	      if (curChar === '>' || curChar === ';') {
+	        var endTag = '';
+	        if (curChar === '>') {
+	          endTag = '<';
+	        } else {
+	          endTag = '&';
+	        }
+	        while (curString.substr(curStrPos - 1).charAt(0) !== endTag) {
+	          curStrPos--;
+	          if (curStrPos < 0) {
+	            break;
+	          }
+	        }
+	        curStrPos--;
+	      }
+	      return curStrPos;
+	    }
+	  }]);
+	
+	  return HTMLParser;
+	})();
+	
+	exports['default'] = HTMLParser;
+	var htmlParser = new HTMLParser();
+	exports.htmlParser = htmlParser;
+
+/***/ })
+/******/ ])
+});
+;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(27);
+var normalizeHeaderName = __webpack_require__(28);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -11214,10 +12264,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(11);
+    adapter = __webpack_require__(12);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(11);
+    adapter = __webpack_require__(12);
   }
   return adapter;
 }
@@ -11292,10 +12342,10 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13836,7 +14886,7 @@ Popper.Defaults = Defaults;
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -14309,11 +15359,11 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
         })();
     }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-}(__webpack_require__(22)));
+}(__webpack_require__(23)));
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14331,7 +15381,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -14521,19 +15571,19 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var settle = __webpack_require__(28);
-var buildURL = __webpack_require__(30);
-var parseHeaders = __webpack_require__(31);
-var isURLSameOrigin = __webpack_require__(32);
-var createError = __webpack_require__(12);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(33);
+var settle = __webpack_require__(29);
+var buildURL = __webpack_require__(31);
+var parseHeaders = __webpack_require__(32);
+var isURLSameOrigin = __webpack_require__(33);
+var createError = __webpack_require__(13);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(34);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -14630,7 +15680,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(34);
+      var cookies = __webpack_require__(35);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -14708,13 +15758,13 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var enhanceError = __webpack_require__(29);
+var enhanceError = __webpack_require__(30);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -14733,7 +15783,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14745,7 +15795,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14771,7 +15821,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17068,23 +18118,23 @@ if (GlobalVue) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(17);
-module.exports = __webpack_require__(77);
+__webpack_require__(18);
+module.exports = __webpack_require__(78);
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_googlemaps_dist_vue_googlemaps_css__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_googlemaps_dist_vue_googlemaps_css__ = __webpack_require__(74);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_googlemaps_dist_vue_googlemaps_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_googlemaps_dist_vue_googlemaps_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_googlemaps__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_typed_js__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_googlemaps__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_typed_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_typed_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_typed_js__);
 
 /**
@@ -17093,12 +18143,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(18);
+__webpack_require__(19);
 
-__webpack_require__(42);
 __webpack_require__(43);
+__webpack_require__(44);
 
-window.Vue = __webpack_require__(44);
+window.Vue = __webpack_require__(45);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -17106,11 +18156,11 @@ window.Vue = __webpack_require__(44);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('events', __webpack_require__(47));
-Vue.component('single-event', __webpack_require__(53));
-Vue.component('events-map', __webpack_require__(58));
-Vue.component('create-edit-event', __webpack_require__(63));
-Vue.component('show-event', __webpack_require__(68));
+Vue.component('events', __webpack_require__(48));
+Vue.component('single-event', __webpack_require__(54));
+Vue.component('events-map', __webpack_require__(59));
+Vue.component('create-edit-event', __webpack_require__(64));
+Vue.component('show-event', __webpack_require__(69));
 
 // import * as VueGoogleMaps from "vue2-google-maps";
 //
@@ -17141,11 +18191,11 @@ var app = new Vue({
 });
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-window._ = __webpack_require__(19);
+window._ = __webpack_require__(20);
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -17154,14 +18204,14 @@ window._ = __webpack_require__(19);
  */
 
 try {
-  window.Popper = __webpack_require__(7).default;
+  window.Popper = __webpack_require__(8).default;
   window.$ = window.jQuery = __webpack_require__(5);
-  __webpack_require__(85);
-  __webpack_require__(21);
-  __webpack_require__(8);
+  __webpack_require__(6);
+  __webpack_require__(22);
+  __webpack_require__(9);
 
-  window.Typed = __webpack_require__(85);
-  window.toastr = __webpack_require__(8);
+  window.Typed = __webpack_require__(6);
+  window.toastr = __webpack_require__(9);
 } catch (e) {}
 
 /**
@@ -17170,7 +18220,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(23);
+window.axios = __webpack_require__(24);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -17206,7 +18256,7 @@ if (token) {
 // });
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -34318,10 +35368,10 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(20)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(21)(module)))
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -34349,7 +35399,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -34358,7 +35408,7 @@ module.exports = function(module) {
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
   */
 (function (global, factory) {
-   true ? factory(exports, __webpack_require__(5), __webpack_require__(7)) :
+   true ? factory(exports, __webpack_require__(5), __webpack_require__(8)) :
   typeof define === 'function' && define.amd ? define(['exports', 'jquery', 'popper.js'], factory) :
   (factory((global.bootstrap = {}),global.jQuery,global.Popper));
 }(this, (function (exports,$,Popper) { 'use strict';
@@ -38299,7 +39349,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports) {
 
 module.exports = function() {
@@ -38308,22 +39358,22 @@ module.exports = function() {
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(24);
+module.exports = __webpack_require__(25);
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(9);
-var Axios = __webpack_require__(26);
-var defaults = __webpack_require__(6);
+var bind = __webpack_require__(10);
+var Axios = __webpack_require__(27);
+var defaults = __webpack_require__(7);
 
 /**
  * Create an instance of Axios
@@ -38356,15 +39406,15 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(14);
-axios.CancelToken = __webpack_require__(40);
-axios.isCancel = __webpack_require__(13);
+axios.Cancel = __webpack_require__(15);
+axios.CancelToken = __webpack_require__(41);
+axios.isCancel = __webpack_require__(14);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(41);
+axios.spread = __webpack_require__(42);
 
 module.exports = axios;
 
@@ -38373,7 +39423,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports) {
 
 /*!
@@ -38400,16 +39450,16 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var defaults = __webpack_require__(6);
+var defaults = __webpack_require__(7);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(35);
-var dispatchRequest = __webpack_require__(36);
+var InterceptorManager = __webpack_require__(36);
+var dispatchRequest = __webpack_require__(37);
 
 /**
  * Create a new instance of Axios
@@ -38486,7 +39536,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38505,13 +39555,13 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(12);
+var createError = __webpack_require__(13);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -38538,7 +39588,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38566,7 +39616,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38639,7 +39689,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38699,7 +39749,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38774,7 +39824,7 @@ module.exports = (
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38817,7 +39867,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38877,7 +39927,7 @@ module.exports = (
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38936,18 +39986,18 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(37);
-var isCancel = __webpack_require__(13);
-var defaults = __webpack_require__(6);
-var isAbsoluteURL = __webpack_require__(38);
-var combineURLs = __webpack_require__(39);
+var transformData = __webpack_require__(38);
+var isCancel = __webpack_require__(14);
+var defaults = __webpack_require__(7);
+var isAbsoluteURL = __webpack_require__(39);
+var combineURLs = __webpack_require__(40);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -39029,7 +40079,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39056,7 +40106,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39077,7 +40127,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39098,13 +40148,13 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(14);
+var Cancel = __webpack_require__(15);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -39162,7 +40212,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39196,7 +40246,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports) {
 
 $(document).on("click", "#create_event_submit", function () {
@@ -39217,9 +40267,9 @@ $('document').ready(function () {
     if ($('#header_typed').length) {
 
         var options = {
-            strings: ['i nærheden af dig', 'når det skal være sjovt', 'når det skal være socialt', 'når det skal være nyt', 'som det passer dig'],
+            strings: ['i nærheden af dig', 'når det skal være sjovt', 'når det skal være socialt', 'som det passer dig'],
             typeSpeed: 50,
-            backSpeed: 50,
+            backSpeed: 25,
             backDelay: 500,
             startDelay: 1000,
             smartBackspace: true,
@@ -39233,7 +40283,7 @@ $('document').ready(function () {
 });
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports) {
 
 
@@ -39356,7 +40406,7 @@ toastr.options.progressBar = true;
 })(jQuery);
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50319,10 +51369,10 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(45).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(46).setImmediate))
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -50378,7 +51428,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(46);
+__webpack_require__(47);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -50392,7 +51442,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -50582,22 +51632,22 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(10)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(11)))
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(48)
+  __webpack_require__(49)
 }
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(51)
+var __vue_script__ = __webpack_require__(52)
 /* template */
-var __vue_template__ = __webpack_require__(52)
+var __vue_template__ = __webpack_require__(53)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -50636,13 +51686,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(49);
+var content = __webpack_require__(50);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -50662,7 +51712,7 @@ if(false) {
 }
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -50676,7 +51726,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports) {
 
 /**
@@ -50709,7 +51759,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -50748,7 +51798,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -50774,19 +51824,19 @@ if (false) {
 }
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(54)
+  __webpack_require__(55)
 }
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(56)
+var __vue_script__ = __webpack_require__(57)
 /* template */
-var __vue_template__ = __webpack_require__(57)
+var __vue_template__ = __webpack_require__(58)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -50825,13 +51875,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(55);
+var content = __webpack_require__(56);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -50851,7 +51901,7 @@ if(false) {
 }
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -50865,7 +51915,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -50907,7 +51957,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -50949,19 +51999,19 @@ if (false) {
 }
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(59)
+  __webpack_require__(60)
 }
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(61)
+var __vue_script__ = __webpack_require__(62)
 /* template */
-var __vue_template__ = __webpack_require__(62)
+var __vue_template__ = __webpack_require__(63)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -51000,13 +52050,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(60);
+var content = __webpack_require__(61);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -51026,7 +52076,7 @@ if(false) {
 }
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -51040,7 +52090,7 @@ exports.push([module.i, "\n.vue-google-map[data-v-0e7027cd]{\n    height: 500px;
 
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -51130,7 +52180,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -51230,19 +52280,19 @@ if (false) {
 }
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(64)
+  __webpack_require__(65)
 }
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(66)
+var __vue_script__ = __webpack_require__(67)
 /* template */
-var __vue_template__ = __webpack_require__(67)
+var __vue_template__ = __webpack_require__(68)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -51281,13 +52331,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(65);
+var content = __webpack_require__(66);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -51307,7 +52357,7 @@ if(false) {
 }
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -51321,12 +52371,12 @@ exports.push([module.i, "\n.vue-google-map[data-v-67a08779]{\n    height: 300px;
 
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_googlemaps__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_googlemaps__ = __webpack_require__(16);
 //
 //
 //
@@ -51527,7 +52577,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -51779,19 +52829,19 @@ if (false) {
 }
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(69)
+  __webpack_require__(70)
 }
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(71)
+var __vue_script__ = __webpack_require__(72)
 /* template */
-var __vue_template__ = __webpack_require__(72)
+var __vue_template__ = __webpack_require__(73)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -51830,13 +52880,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(70);
+var content = __webpack_require__(71);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -51856,7 +52906,7 @@ if(false) {
 }
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -51870,7 +52920,7 @@ exports.push([module.i, "\n.vue-google-map[data-v-09609142]{\n    height: 300px;
 
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -51984,7 +53034,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -52096,13 +53146,13 @@ if (false) {
 }
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(74);
+var content = __webpack_require__(75);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -52110,7 +53160,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(75)(content, options);
+var update = __webpack_require__(76)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -52127,7 +53177,7 @@ if(false) {
 }
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -52141,7 +53191,7 @@ exports.push([module.i, ".vue-google-map[data-v-3074bd5c]{position:relative}.vue
 
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -52187,7 +53237,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(76);
+var	fixUrls = __webpack_require__(77);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -52500,7 +53550,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports) {
 
 
@@ -52595,1067 +53645,10 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 78 */,
-/* 79 */,
-/* 80 */,
-/* 81 */,
-/* 82 */,
-/* 83 */,
-/* 84 */,
-/* 85 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*!
- * 
- *   typed.js - A JavaScript Typing Animation Library
- *   Author: Matt Boldt <me@mattboldt.com>
- *   Version: v2.0.9
- *   Url: https://github.com/mattboldt/typed.js
- *   License(s): MIT
- * 
- */
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(true)
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define([], factory);
-	else if(typeof exports === 'object')
-		exports["Typed"] = factory();
-	else
-		root["Typed"] = factory();
-})(this, function() {
-return /******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
-/******/ 			return installedModules[moduleId].exports;
-/******/
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			exports: {},
-/******/ 			id: moduleId,
-/******/ 			loaded: false
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.loaded = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(0);
-/******/ })
-/************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-	
-	var _initializerJs = __webpack_require__(1);
-	
-	var _htmlParserJs = __webpack_require__(3);
-	
-	/**
-	 * Welcome to Typed.js!
-	 * @param {string} elementId HTML element ID _OR_ HTML element
-	 * @param {object} options options object
-	 * @returns {object} a new Typed object
-	 */
-	
-	var Typed = (function () {
-	  function Typed(elementId, options) {
-	    _classCallCheck(this, Typed);
-	
-	    // Initialize it up
-	    _initializerJs.initializer.load(this, options, elementId);
-	    // All systems go!
-	    this.begin();
-	  }
-	
-	  /**
-	   * Toggle start() and stop() of the Typed instance
-	   * @public
-	   */
-	
-	  _createClass(Typed, [{
-	    key: 'toggle',
-	    value: function toggle() {
-	      this.pause.status ? this.start() : this.stop();
-	    }
-	
-	    /**
-	     * Stop typing / backspacing and enable cursor blinking
-	     * @public
-	     */
-	  }, {
-	    key: 'stop',
-	    value: function stop() {
-	      if (this.typingComplete) return;
-	      if (this.pause.status) return;
-	      this.toggleBlinking(true);
-	      this.pause.status = true;
-	      this.options.onStop(this.arrayPos, this);
-	    }
-	
-	    /**
-	     * Start typing / backspacing after being stopped
-	     * @public
-	     */
-	  }, {
-	    key: 'start',
-	    value: function start() {
-	      if (this.typingComplete) return;
-	      if (!this.pause.status) return;
-	      this.pause.status = false;
-	      if (this.pause.typewrite) {
-	        this.typewrite(this.pause.curString, this.pause.curStrPos);
-	      } else {
-	        this.backspace(this.pause.curString, this.pause.curStrPos);
-	      }
-	      this.options.onStart(this.arrayPos, this);
-	    }
-	
-	    /**
-	     * Destroy this instance of Typed
-	     * @public
-	     */
-	  }, {
-	    key: 'destroy',
-	    value: function destroy() {
-	      this.reset(false);
-	      this.options.onDestroy(this);
-	    }
-	
-	    /**
-	     * Reset Typed and optionally restarts
-	     * @param {boolean} restart
-	     * @public
-	     */
-	  }, {
-	    key: 'reset',
-	    value: function reset() {
-	      var restart = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
-	
-	      clearInterval(this.timeout);
-	      this.replaceText('');
-	      if (this.cursor && this.cursor.parentNode) {
-	        this.cursor.parentNode.removeChild(this.cursor);
-	        this.cursor = null;
-	      }
-	      this.strPos = 0;
-	      this.arrayPos = 0;
-	      this.curLoop = 0;
-	      if (restart) {
-	        this.insertCursor();
-	        this.options.onReset(this);
-	        this.begin();
-	      }
-	    }
-	
-	    /**
-	     * Begins the typing animation
-	     * @private
-	     */
-	  }, {
-	    key: 'begin',
-	    value: function begin() {
-	      var _this = this;
-	
-	      this.typingComplete = false;
-	      this.shuffleStringsIfNeeded(this);
-	      this.insertCursor();
-	      if (this.bindInputFocusEvents) this.bindFocusEvents();
-	      this.timeout = setTimeout(function () {
-	        // Check if there is some text in the element, if yes start by backspacing the default message
-	        if (!_this.currentElContent || _this.currentElContent.length === 0) {
-	          _this.typewrite(_this.strings[_this.sequence[_this.arrayPos]], _this.strPos);
-	        } else {
-	          // Start typing
-	          _this.backspace(_this.currentElContent, _this.currentElContent.length);
-	        }
-	      }, this.startDelay);
-	    }
-	
-	    /**
-	     * Called for each character typed
-	     * @param {string} curString the current string in the strings array
-	     * @param {number} curStrPos the current position in the curString
-	     * @private
-	     */
-	  }, {
-	    key: 'typewrite',
-	    value: function typewrite(curString, curStrPos) {
-	      var _this2 = this;
-	
-	      if (this.fadeOut && this.el.classList.contains(this.fadeOutClass)) {
-	        this.el.classList.remove(this.fadeOutClass);
-	        if (this.cursor) this.cursor.classList.remove(this.fadeOutClass);
-	      }
-	
-	      var humanize = this.humanizer(this.typeSpeed);
-	      var numChars = 1;
-	
-	      if (this.pause.status === true) {
-	        this.setPauseStatus(curString, curStrPos, true);
-	        return;
-	      }
-	
-	      // contain typing function in a timeout humanize'd delay
-	      this.timeout = setTimeout(function () {
-	        // skip over any HTML chars
-	        curStrPos = _htmlParserJs.htmlParser.typeHtmlChars(curString, curStrPos, _this2);
-	
-	        var pauseTime = 0;
-	        var substr = curString.substr(curStrPos);
-	        // check for an escape character before a pause value
-	        // format: \^\d+ .. eg: ^1000 .. should be able to print the ^ too using ^^
-	        // single ^ are removed from string
-	        if (substr.charAt(0) === '^') {
-	          if (/^\^\d+/.test(substr)) {
-	            var skip = 1; // skip at least 1
-	            substr = /\d+/.exec(substr)[0];
-	            skip += substr.length;
-	            pauseTime = parseInt(substr);
-	            _this2.temporaryPause = true;
-	            _this2.options.onTypingPaused(_this2.arrayPos, _this2);
-	            // strip out the escape character and pause value so they're not printed
-	            curString = curString.substring(0, curStrPos) + curString.substring(curStrPos + skip);
-	            _this2.toggleBlinking(true);
-	          }
-	        }
-	
-	        // check for skip characters formatted as
-	        // "this is a `string to print NOW` ..."
-	        if (substr.charAt(0) === '`') {
-	          while (curString.substr(curStrPos + numChars).charAt(0) !== '`') {
-	            numChars++;
-	            if (curStrPos + numChars > curString.length) break;
-	          }
-	          // strip out the escape characters and append all the string in between
-	          var stringBeforeSkip = curString.substring(0, curStrPos);
-	          var stringSkipped = curString.substring(stringBeforeSkip.length + 1, curStrPos + numChars);
-	          var stringAfterSkip = curString.substring(curStrPos + numChars + 1);
-	          curString = stringBeforeSkip + stringSkipped + stringAfterSkip;
-	          numChars--;
-	        }
-	
-	        // timeout for any pause after a character
-	        _this2.timeout = setTimeout(function () {
-	          // Accounts for blinking while paused
-	          _this2.toggleBlinking(false);
-	
-	          // We're done with this sentence!
-	          if (curStrPos === curString.length) {
-	            _this2.doneTyping(curString, curStrPos);
-	          } else {
-	            _this2.keepTyping(curString, curStrPos, numChars);
-	          }
-	          // end of character pause
-	          if (_this2.temporaryPause) {
-	            _this2.temporaryPause = false;
-	            _this2.options.onTypingResumed(_this2.arrayPos, _this2);
-	          }
-	        }, pauseTime);
-	
-	        // humanized value for typing
-	      }, humanize);
-	    }
-	
-	    /**
-	     * Continue to the next string & begin typing
-	     * @param {string} curString the current string in the strings array
-	     * @param {number} curStrPos the current position in the curString
-	     * @private
-	     */
-	  }, {
-	    key: 'keepTyping',
-	    value: function keepTyping(curString, curStrPos, numChars) {
-	      // call before functions if applicable
-	      if (curStrPos === 0) {
-	        this.toggleBlinking(false);
-	        this.options.preStringTyped(this.arrayPos, this);
-	      }
-	      // start typing each new char into existing string
-	      // curString: arg, this.el.html: original text inside element
-	      curStrPos += numChars;
-	      var nextString = curString.substr(0, curStrPos);
-	      this.replaceText(nextString);
-	      // loop the function
-	      this.typewrite(curString, curStrPos);
-	    }
-	
-	    /**
-	     * We're done typing all strings
-	     * @param {string} curString the current string in the strings array
-	     * @param {number} curStrPos the current position in the curString
-	     * @private
-	     */
-	  }, {
-	    key: 'doneTyping',
-	    value: function doneTyping(curString, curStrPos) {
-	      var _this3 = this;
-	
-	      // fires callback function
-	      this.options.onStringTyped(this.arrayPos, this);
-	      this.toggleBlinking(true);
-	      // is this the final string
-	      if (this.arrayPos === this.strings.length - 1) {
-	        // callback that occurs on the last typed string
-	        this.complete();
-	        // quit if we wont loop back
-	        if (this.loop === false || this.curLoop === this.loopCount) {
-	          return;
-	        }
-	      }
-	      this.timeout = setTimeout(function () {
-	        _this3.backspace(curString, curStrPos);
-	      }, this.backDelay);
-	    }
-	
-	    /**
-	     * Backspaces 1 character at a time
-	     * @param {string} curString the current string in the strings array
-	     * @param {number} curStrPos the current position in the curString
-	     * @private
-	     */
-	  }, {
-	    key: 'backspace',
-	    value: function backspace(curString, curStrPos) {
-	      var _this4 = this;
-	
-	      if (this.pause.status === true) {
-	        this.setPauseStatus(curString, curStrPos, true);
-	        return;
-	      }
-	      if (this.fadeOut) return this.initFadeOut();
-	
-	      this.toggleBlinking(false);
-	      var humanize = this.humanizer(this.backSpeed);
-	
-	      this.timeout = setTimeout(function () {
-	        curStrPos = _htmlParserJs.htmlParser.backSpaceHtmlChars(curString, curStrPos, _this4);
-	        // replace text with base text + typed characters
-	        var curStringAtPosition = curString.substr(0, curStrPos);
-	        _this4.replaceText(curStringAtPosition);
-	
-	        // if smartBack is enabled
-	        if (_this4.smartBackspace) {
-	          // the remaining part of the current string is equal of the same part of the new string
-	          var nextString = _this4.strings[_this4.arrayPos + 1];
-	          if (nextString && curStringAtPosition === nextString.substr(0, curStrPos)) {
-	            _this4.stopNum = curStrPos;
-	          } else {
-	            _this4.stopNum = 0;
-	          }
-	        }
-	
-	        // if the number (id of character in current string) is
-	        // less than the stop number, keep going
-	        if (curStrPos > _this4.stopNum) {
-	          // subtract characters one by one
-	          curStrPos--;
-	          // loop the function
-	          _this4.backspace(curString, curStrPos);
-	        } else if (curStrPos <= _this4.stopNum) {
-	          // if the stop number has been reached, increase
-	          // array position to next string
-	          _this4.arrayPos++;
-	          // When looping, begin at the beginning after backspace complete
-	          if (_this4.arrayPos === _this4.strings.length) {
-	            _this4.arrayPos = 0;
-	            _this4.options.onLastStringBackspaced();
-	            _this4.shuffleStringsIfNeeded();
-	            _this4.begin();
-	          } else {
-	            _this4.typewrite(_this4.strings[_this4.sequence[_this4.arrayPos]], curStrPos);
-	          }
-	        }
-	        // humanized value for typing
-	      }, humanize);
-	    }
-	
-	    /**
-	     * Full animation is complete
-	     * @private
-	     */
-	  }, {
-	    key: 'complete',
-	    value: function complete() {
-	      this.options.onComplete(this);
-	      if (this.loop) {
-	        this.curLoop++;
-	      } else {
-	        this.typingComplete = true;
-	      }
-	    }
-	
-	    /**
-	     * Has the typing been stopped
-	     * @param {string} curString the current string in the strings array
-	     * @param {number} curStrPos the current position in the curString
-	     * @param {boolean} isTyping
-	     * @private
-	     */
-	  }, {
-	    key: 'setPauseStatus',
-	    value: function setPauseStatus(curString, curStrPos, isTyping) {
-	      this.pause.typewrite = isTyping;
-	      this.pause.curString = curString;
-	      this.pause.curStrPos = curStrPos;
-	    }
-	
-	    /**
-	     * Toggle the blinking cursor
-	     * @param {boolean} isBlinking
-	     * @private
-	     */
-	  }, {
-	    key: 'toggleBlinking',
-	    value: function toggleBlinking(isBlinking) {
-	      if (!this.cursor) return;
-	      // if in paused state, don't toggle blinking a 2nd time
-	      if (this.pause.status) return;
-	      if (this.cursorBlinking === isBlinking) return;
-	      this.cursorBlinking = isBlinking;
-	      if (isBlinking) {
-	        this.cursor.classList.add('typed-cursor--blink');
-	      } else {
-	        this.cursor.classList.remove('typed-cursor--blink');
-	      }
-	    }
-	
-	    /**
-	     * Speed in MS to type
-	     * @param {number} speed
-	     * @private
-	     */
-	  }, {
-	    key: 'humanizer',
-	    value: function humanizer(speed) {
-	      return Math.round(Math.random() * speed / 2) + speed;
-	    }
-	
-	    /**
-	     * Shuffle the sequence of the strings array
-	     * @private
-	     */
-	  }, {
-	    key: 'shuffleStringsIfNeeded',
-	    value: function shuffleStringsIfNeeded() {
-	      if (!this.shuffle) return;
-	      this.sequence = this.sequence.sort(function () {
-	        return Math.random() - 0.5;
-	      });
-	    }
-	
-	    /**
-	     * Adds a CSS class to fade out current string
-	     * @private
-	     */
-	  }, {
-	    key: 'initFadeOut',
-	    value: function initFadeOut() {
-	      var _this5 = this;
-	
-	      this.el.className += ' ' + this.fadeOutClass;
-	      if (this.cursor) this.cursor.className += ' ' + this.fadeOutClass;
-	      return setTimeout(function () {
-	        _this5.arrayPos++;
-	        _this5.replaceText('');
-	
-	        // Resets current string if end of loop reached
-	        if (_this5.strings.length > _this5.arrayPos) {
-	          _this5.typewrite(_this5.strings[_this5.sequence[_this5.arrayPos]], 0);
-	        } else {
-	          _this5.typewrite(_this5.strings[0], 0);
-	          _this5.arrayPos = 0;
-	        }
-	      }, this.fadeOutDelay);
-	    }
-	
-	    /**
-	     * Replaces current text in the HTML element
-	     * depending on element type
-	     * @param {string} str
-	     * @private
-	     */
-	  }, {
-	    key: 'replaceText',
-	    value: function replaceText(str) {
-	      if (this.attr) {
-	        this.el.setAttribute(this.attr, str);
-	      } else {
-	        if (this.isInput) {
-	          this.el.value = str;
-	        } else if (this.contentType === 'html') {
-	          this.el.innerHTML = str;
-	        } else {
-	          this.el.textContent = str;
-	        }
-	      }
-	    }
-	
-	    /**
-	     * If using input elements, bind focus in order to
-	     * start and stop the animation
-	     * @private
-	     */
-	  }, {
-	    key: 'bindFocusEvents',
-	    value: function bindFocusEvents() {
-	      var _this6 = this;
-	
-	      if (!this.isInput) return;
-	      this.el.addEventListener('focus', function (e) {
-	        _this6.stop();
-	      });
-	      this.el.addEventListener('blur', function (e) {
-	        if (_this6.el.value && _this6.el.value.length !== 0) {
-	          return;
-	        }
-	        _this6.start();
-	      });
-	    }
-	
-	    /**
-	     * On init, insert the cursor element
-	     * @private
-	     */
-	  }, {
-	    key: 'insertCursor',
-	    value: function insertCursor() {
-	      if (!this.showCursor) return;
-	      if (this.cursor) return;
-	      this.cursor = document.createElement('span');
-	      this.cursor.className = 'typed-cursor';
-	      this.cursor.innerHTML = this.cursorChar;
-	      this.el.parentNode && this.el.parentNode.insertBefore(this.cursor, this.el.nextSibling);
-	    }
-	  }]);
-	
-	  return Typed;
-	})();
-	
-	exports['default'] = Typed;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-	
-	var _defaultsJs = __webpack_require__(2);
-	
-	var _defaultsJs2 = _interopRequireDefault(_defaultsJs);
-	
-	/**
-	 * Initialize the Typed object
-	 */
-	
-	var Initializer = (function () {
-	  function Initializer() {
-	    _classCallCheck(this, Initializer);
-	  }
-	
-	  _createClass(Initializer, [{
-	    key: 'load',
-	
-	    /**
-	     * Load up defaults & options on the Typed instance
-	     * @param {Typed} self instance of Typed
-	     * @param {object} options options object
-	     * @param {string} elementId HTML element ID _OR_ instance of HTML element
-	     * @private
-	     */
-	
-	    value: function load(self, options, elementId) {
-	      // chosen element to manipulate text
-	      if (typeof elementId === 'string') {
-	        self.el = document.querySelector(elementId);
-	      } else {
-	        self.el = elementId;
-	      }
-	
-	      self.options = _extends({}, _defaultsJs2['default'], options);
-	
-	      // attribute to type into
-	      self.isInput = self.el.tagName.toLowerCase() === 'input';
-	      self.attr = self.options.attr;
-	      self.bindInputFocusEvents = self.options.bindInputFocusEvents;
-	
-	      // show cursor
-	      self.showCursor = self.isInput ? false : self.options.showCursor;
-	
-	      // custom cursor
-	      self.cursorChar = self.options.cursorChar;
-	
-	      // Is the cursor blinking
-	      self.cursorBlinking = true;
-	
-	      // text content of element
-	      self.elContent = self.attr ? self.el.getAttribute(self.attr) : self.el.textContent;
-	
-	      // html or plain text
-	      self.contentType = self.options.contentType;
-	
-	      // typing speed
-	      self.typeSpeed = self.options.typeSpeed;
-	
-	      // add a delay before typing starts
-	      self.startDelay = self.options.startDelay;
-	
-	      // backspacing speed
-	      self.backSpeed = self.options.backSpeed;
-	
-	      // only backspace what doesn't match the previous string
-	      self.smartBackspace = self.options.smartBackspace;
-	
-	      // amount of time to wait before backspacing
-	      self.backDelay = self.options.backDelay;
-	
-	      // Fade out instead of backspace
-	      self.fadeOut = self.options.fadeOut;
-	      self.fadeOutClass = self.options.fadeOutClass;
-	      self.fadeOutDelay = self.options.fadeOutDelay;
-	
-	      // variable to check whether typing is currently paused
-	      self.isPaused = false;
-	
-	      // input strings of text
-	      self.strings = self.options.strings.map(function (s) {
-	        return s.trim();
-	      });
-	
-	      // div containing strings
-	      if (typeof self.options.stringsElement === 'string') {
-	        self.stringsElement = document.querySelector(self.options.stringsElement);
-	      } else {
-	        self.stringsElement = self.options.stringsElement;
-	      }
-	
-	      if (self.stringsElement) {
-	        self.strings = [];
-	        self.stringsElement.style.display = 'none';
-	        var strings = Array.prototype.slice.apply(self.stringsElement.children);
-	        var stringsLength = strings.length;
-	
-	        if (stringsLength) {
-	          for (var i = 0; i < stringsLength; i += 1) {
-	            var stringEl = strings[i];
-	            self.strings.push(stringEl.innerHTML.trim());
-	          }
-	        }
-	      }
-	
-	      // character number position of current string
-	      self.strPos = 0;
-	
-	      // current array position
-	      self.arrayPos = 0;
-	
-	      // index of string to stop backspacing on
-	      self.stopNum = 0;
-	
-	      // Looping logic
-	      self.loop = self.options.loop;
-	      self.loopCount = self.options.loopCount;
-	      self.curLoop = 0;
-	
-	      // shuffle the strings
-	      self.shuffle = self.options.shuffle;
-	      // the order of strings
-	      self.sequence = [];
-	
-	      self.pause = {
-	        status: false,
-	        typewrite: true,
-	        curString: '',
-	        curStrPos: 0
-	      };
-	
-	      // When the typing is complete (when not looped)
-	      self.typingComplete = false;
-	
-	      // Set the order in which the strings are typed
-	      for (var i in self.strings) {
-	        self.sequence[i] = i;
-	      }
-	
-	      // If there is some text in the element
-	      self.currentElContent = this.getCurrentElContent(self);
-	
-	      self.autoInsertCss = self.options.autoInsertCss;
-	
-	      this.appendAnimationCss(self);
-	    }
-	  }, {
-	    key: 'getCurrentElContent',
-	    value: function getCurrentElContent(self) {
-	      var elContent = '';
-	      if (self.attr) {
-	        elContent = self.el.getAttribute(self.attr);
-	      } else if (self.isInput) {
-	        elContent = self.el.value;
-	      } else if (self.contentType === 'html') {
-	        elContent = self.el.innerHTML;
-	      } else {
-	        elContent = self.el.textContent;
-	      }
-	      return elContent;
-	    }
-	  }, {
-	    key: 'appendAnimationCss',
-	    value: function appendAnimationCss(self) {
-	      var cssDataName = 'data-typed-js-css';
-	      if (!self.autoInsertCss) {
-	        return;
-	      }
-	      if (!self.showCursor && !self.fadeOut) {
-	        return;
-	      }
-	      if (document.querySelector('[' + cssDataName + ']')) {
-	        return;
-	      }
-	
-	      var css = document.createElement('style');
-	      css.type = 'text/css';
-	      css.setAttribute(cssDataName, true);
-	
-	      var innerCss = '';
-	      if (self.showCursor) {
-	        innerCss += '\n        .typed-cursor{\n          opacity: 1;\n        }\n        .typed-cursor.typed-cursor--blink{\n          animation: typedjsBlink 0.7s infinite;\n          -webkit-animation: typedjsBlink 0.7s infinite;\n                  animation: typedjsBlink 0.7s infinite;\n        }\n        @keyframes typedjsBlink{\n          50% { opacity: 0.0; }\n        }\n        @-webkit-keyframes typedjsBlink{\n          0% { opacity: 1; }\n          50% { opacity: 0.0; }\n          100% { opacity: 1; }\n        }\n      ';
-	      }
-	      if (self.fadeOut) {
-	        innerCss += '\n        .typed-fade-out{\n          opacity: 0;\n          transition: opacity .25s;\n        }\n        .typed-cursor.typed-cursor--blink.typed-fade-out{\n          -webkit-animation: 0;\n          animation: 0;\n        }\n      ';
-	      }
-	      if (css.length === 0) {
-	        return;
-	      }
-	      css.innerHTML = innerCss;
-	      document.body.appendChild(css);
-	    }
-	  }]);
-	
-	  return Initializer;
-	})();
-	
-	exports['default'] = Initializer;
-	var initializer = new Initializer();
-	exports.initializer = initializer;
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-	/**
-	 * Defaults & options
-	 * @returns {object} Typed defaults & options
-	 * @public
-	 */
-	
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	var defaults = {
-	  /**
-	   * @property {array} strings strings to be typed
-	   * @property {string} stringsElement ID of element containing string children
-	   */
-	  strings: ['These are the default values...', 'You know what you should do?', 'Use your own!', 'Have a great day!'],
-	  stringsElement: null,
-	
-	  /**
-	   * @property {number} typeSpeed type speed in milliseconds
-	   */
-	  typeSpeed: 0,
-	
-	  /**
-	   * @property {number} startDelay time before typing starts in milliseconds
-	   */
-	  startDelay: 0,
-	
-	  /**
-	   * @property {number} backSpeed backspacing speed in milliseconds
-	   */
-	  backSpeed: 0,
-	
-	  /**
-	   * @property {boolean} smartBackspace only backspace what doesn't match the previous string
-	   */
-	  smartBackspace: true,
-	
-	  /**
-	   * @property {boolean} shuffle shuffle the strings
-	   */
-	  shuffle: false,
-	
-	  /**
-	   * @property {number} backDelay time before backspacing in milliseconds
-	   */
-	  backDelay: 700,
-	
-	  /**
-	   * @property {boolean} fadeOut Fade out instead of backspace
-	   * @property {string} fadeOutClass css class for fade animation
-	   * @property {boolean} fadeOutDelay Fade out delay in milliseconds
-	   */
-	  fadeOut: false,
-	  fadeOutClass: 'typed-fade-out',
-	  fadeOutDelay: 500,
-	
-	  /**
-	   * @property {boolean} loop loop strings
-	   * @property {number} loopCount amount of loops
-	   */
-	  loop: false,
-	  loopCount: Infinity,
-	
-	  /**
-	   * @property {boolean} showCursor show cursor
-	   * @property {string} cursorChar character for cursor
-	   * @property {boolean} autoInsertCss insert CSS for cursor and fadeOut into HTML <head>
-	   */
-	  showCursor: true,
-	  cursorChar: '|',
-	  autoInsertCss: true,
-	
-	  /**
-	   * @property {string} attr attribute for typing
-	   * Ex: input placeholder, value, or just HTML text
-	   */
-	  attr: null,
-	
-	  /**
-	   * @property {boolean} bindInputFocusEvents bind to focus and blur if el is text input
-	   */
-	  bindInputFocusEvents: false,
-	
-	  /**
-	   * @property {string} contentType 'html' or 'null' for plaintext
-	   */
-	  contentType: 'html',
-	
-	  /**
-	   * All typing is complete
-	   * @param {Typed} self
-	   */
-	  onComplete: function onComplete(self) {},
-	
-	  /**
-	   * Before each string is typed
-	   * @param {number} arrayPos
-	   * @param {Typed} self
-	   */
-	  preStringTyped: function preStringTyped(arrayPos, self) {},
-	
-	  /**
-	   * After each string is typed
-	   * @param {number} arrayPos
-	   * @param {Typed} self
-	   */
-	  onStringTyped: function onStringTyped(arrayPos, self) {},
-	
-	  /**
-	   * During looping, after last string is typed
-	   * @param {Typed} self
-	   */
-	  onLastStringBackspaced: function onLastStringBackspaced(self) {},
-	
-	  /**
-	   * Typing has been stopped
-	   * @param {number} arrayPos
-	   * @param {Typed} self
-	   */
-	  onTypingPaused: function onTypingPaused(arrayPos, self) {},
-	
-	  /**
-	   * Typing has been started after being stopped
-	   * @param {number} arrayPos
-	   * @param {Typed} self
-	   */
-	  onTypingResumed: function onTypingResumed(arrayPos, self) {},
-	
-	  /**
-	   * After reset
-	   * @param {Typed} self
-	   */
-	  onReset: function onReset(self) {},
-	
-	  /**
-	   * After stop
-	   * @param {number} arrayPos
-	   * @param {Typed} self
-	   */
-	  onStop: function onStop(arrayPos, self) {},
-	
-	  /**
-	   * After start
-	   * @param {number} arrayPos
-	   * @param {Typed} self
-	   */
-	  onStart: function onStart(arrayPos, self) {},
-	
-	  /**
-	   * After destroy
-	   * @param {Typed} self
-	   */
-	  onDestroy: function onDestroy(self) {}
-	};
-	
-	exports['default'] = defaults;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-	
-	/**
-	 * TODO: These methods can probably be combined somehow
-	 * Parse HTML tags & HTML Characters
-	 */
-	
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-	
-	var HTMLParser = (function () {
-	  function HTMLParser() {
-	    _classCallCheck(this, HTMLParser);
-	  }
-	
-	  _createClass(HTMLParser, [{
-	    key: 'typeHtmlChars',
-	
-	    /**
-	     * Type HTML tags & HTML Characters
-	     * @param {string} curString Current string
-	     * @param {number} curStrPos Position in current string
-	     * @param {Typed} self instance of Typed
-	     * @returns {number} a new string position
-	     * @private
-	     */
-	
-	    value: function typeHtmlChars(curString, curStrPos, self) {
-	      if (self.contentType !== 'html') return curStrPos;
-	      var curChar = curString.substr(curStrPos).charAt(0);
-	      if (curChar === '<' || curChar === '&') {
-	        var endTag = '';
-	        if (curChar === '<') {
-	          endTag = '>';
-	        } else {
-	          endTag = ';';
-	        }
-	        while (curString.substr(curStrPos + 1).charAt(0) !== endTag) {
-	          curStrPos++;
-	          if (curStrPos + 1 > curString.length) {
-	            break;
-	          }
-	        }
-	        curStrPos++;
-	      }
-	      return curStrPos;
-	    }
-	
-	    /**
-	     * Backspace HTML tags and HTML Characters
-	     * @param {string} curString Current string
-	     * @param {number} curStrPos Position in current string
-	     * @param {Typed} self instance of Typed
-	     * @returns {number} a new string position
-	     * @private
-	     */
-	  }, {
-	    key: 'backSpaceHtmlChars',
-	    value: function backSpaceHtmlChars(curString, curStrPos, self) {
-	      if (self.contentType !== 'html') return curStrPos;
-	      var curChar = curString.substr(curStrPos).charAt(0);
-	      if (curChar === '>' || curChar === ';') {
-	        var endTag = '';
-	        if (curChar === '>') {
-	          endTag = '<';
-	        } else {
-	          endTag = '&';
-	        }
-	        while (curString.substr(curStrPos - 1).charAt(0) !== endTag) {
-	          curStrPos--;
-	          if (curStrPos < 0) {
-	            break;
-	          }
-	        }
-	        curStrPos--;
-	      }
-	      return curStrPos;
-	    }
-	  }]);
-	
-	  return HTMLParser;
-	})();
-	
-	exports['default'] = HTMLParser;
-	var htmlParser = new HTMLParser();
-	exports.htmlParser = htmlParser;
-
-/***/ })
-/******/ ])
-});
-;
 
 /***/ })
 /******/ ]);
