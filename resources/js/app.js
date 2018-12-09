@@ -42,7 +42,7 @@ import Typed from 'typed.js';
 Vue.use(VueGoogleMaps, {
     load: {
         // Google API key
-        apiKey: 'AIzaSyB3q_1Npa0gYkXGEe4qzpDqRYI6HTkibLw',
+        apiKey: 'AIzaSyCdkKI4bOH23fY_ZYzupQQBLEdy6STilnw',
         // Enable more Google Maps libraries here
         libraries: ['places'],
         // Use new renderer
