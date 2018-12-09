@@ -53458,8 +53458,6 @@ Vue.component('event-comments', __webpack_require__("./resources/js/components/E
 
 
 
-console.log('AIzaSyCdkKI4bOH23fY_ZYzupQQBLEdy6STilnw');
-
 Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_googlemaps__["a" /* default */], {
     load: {
         // Google API key
