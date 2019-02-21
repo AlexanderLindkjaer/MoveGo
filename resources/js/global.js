@@ -1,5 +1,7 @@
 
-toastr.options.progressBar = true;
+toastr.options.progressBar = false;
+toastr.options.closeButton = true;
+toastr.options.toastClass = 'toastr';
 
 
 (function ($) {

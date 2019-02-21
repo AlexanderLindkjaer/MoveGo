@@ -11,22 +11,19 @@
             />
 
         </googlemaps-map>
-        <div v-if="currentmarker" class=" map-event-details ">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 text-center">
+        <div v-if="currentmarker" class=" map-event-details">
+            <div class="container-fluid bg-sitebackground">
+                <div class="row px-5">
+                    <div class="col-12 text-center text-white">
                         <h1>{{currentmarker.headline}}</h1>
                         <h3>{{currentmarker.no_of_signups}} personer deltager</h3>
                     </div>
-                    <div class="col-md-6 text-center">
-                        <p>{{currentmarker.description}}</p>
-                    </div>
-                    <div class="col-md-6 text-center">
+                    <div class="col-md-6 text-left text-white">
+                        <p class="mb-4">{{currentmarker.description}}</p>
                         <p>{{currentmarker.adress}}</p>
-                        <p>{{currentmarker.start_of_event_date}}</p>
-                        <p>{{currentmarker.start_of_event_clock}}</p>
+                        <p>{{dateFormatter(currentmarker.start_of_event_date)}} - {{currentmarker.start_of_event_clock}}</p>
                     </div>
-                    <div class="col-12 text-center">
+                    <div class="col-6 text-center text-white">
                             <a :href="'/event/'+currentmarker.id" class="btn bg-orange text-white text-center" ><h3>Gå til aktivitet</h3></a>
                     </div>
                 </div>
@@ -82,6 +79,11 @@
             selectMarker(marker)
             {
                 this.currentmarker = marker
+            },
+            dateFormatter(date){
+                var date = moment(date).format("DD-MM-YYYY");
+                if (date == "Invalid date") return "No date";
+                return date;
             }
 
         }

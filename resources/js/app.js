@@ -18,6 +18,7 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+
 Vue.component('events', require('./components/EventsComponent.vue'));
 Vue.component('single-event', require('./components/SingleEventComponent.vue'));
 Vue.component('events-map', require('./components/AllEventsMap.vue'));
@@ -49,6 +50,13 @@ Vue.use(VueGoogleMaps, {
         useBetaRenderer: false,
     },
 })
+
+import Vue from 'vue';
+import VeeValidate from 'vee-validate';
+
+Vue.use(VeeValidate, {
+    classes: true
+});
 
 const app = new Vue({
     el: '#app'

@@ -91,20 +91,17 @@ class EventController extends Controller
     {
         $event = event::find($request->id);
 
-
-        $signup = Signup::where('event_id', $event->id)->where('name', $request->name)->first();
-
-        if($signup){
-            abort(403,'Dette kaldenavn er allerede tilmeldt event');
+        $existing = Signup::where('event_id', $event->id)->where('user_id', $request->user_id)->first();
+        if($existing){
+            abort('403', 'Bruger er allerede tilmeldt');
         }
-
-        $event->increment('no_of_signups');
 
         $signup = Signup::create([
             'event_id' => $event->id,
-            'name' => $request->name,
-            'comment' => $request->comment ? $request->comment : ''
+            'user_id' => $request->user_id,
         ]);
+
+        $event->increment('no_of_signups');
 
         return $event;
     }
@@ -114,7 +111,17 @@ class EventController extends Controller
         $event->start_of_event_date = Carbon::parse($event->start_of_event_date)->format('Y-m-d');
         $event->start_of_event_date_pretty = Carbon::parse($event->start_of_event_date)->format('d-m-Y');
         $event->load(['signups']);
-        return $event;
+        $event->load(['signups.user']);
+
+        $data = array();
+        array_push($data, $event);
+
+        if(auth()->user()){
+            array_push($data, auth()->user());
+        }
+
+
+        return $data;
 
     }
 

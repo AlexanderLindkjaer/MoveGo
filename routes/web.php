@@ -29,3 +29,7 @@ Route::get('/koncept', 'EventController@concept')->name('concept');
 Route::get('/kontakt', function (){
     return view('contact');
 })->name('contact');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

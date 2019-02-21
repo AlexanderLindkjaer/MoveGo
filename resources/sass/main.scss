@@ -1,3 +1,8 @@
+
+body{
+  height: 100vh;
+}
+
 .bg-blue{
   background-color: $blue;
 }
@@ -21,6 +26,14 @@
 .header-logo{
   width: 40%;
   margin-bottom: 2rem;
+}
+
+
+input,
+textarea{
+  &.invalid{
+    border: 1px solid red;
+  }
 }
 
 @media only screen and (max-width: 600px) {

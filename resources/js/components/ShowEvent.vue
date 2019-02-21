@@ -15,22 +15,16 @@
             <div class="row">
                 <div class="col-12">
                     <div class="like-box text-center pointer py-4">
-                        <h4>{{event.no_of_signups}} deltager i denne aktivitet</h4>
-                        <div class="row">
-                            <div class="col-md-12 text-center py-2">
-                                <label>Kaldenavn*</label>
-                                <br>
-                                <input placeholder="Dit deltagernavn" class="event-input" type="text" v-model="name">
-                            </div>
-                            <div class="col-md-12 text-center  py-2">
-                                <label>Kommentar</label>
-                                <br>
-                                <textarea placeholder="Skriv en kommentar til din deltagelse" class="event-input" type="text" v-model="comment"></textarea>
-                            </div>
-                        </div>
-                        <div @click="attend" class="attend pt-2">
-                            <i class="fa fa-5x fa-check-circle-o" aria-hidden="true"></i>
-                            <p>Deltag</p>
+                       <div v-if="user">
+                           <h4>{{event.no_of_signups}} deltager i denne aktivitet</h4>
+                           <div @click="attend" class="attend pt-2">
+                               <i class="fa fa-5x fa-check-circle-o" aria-hidden="true"></i>
+                               <p>Deltag</p>
+                           </div>
+                       </div>
+                        <div v-else>
+                            <h4 mb-3>{{event.no_of_signups}} deltager i denne aktivitet</h4>
+                            <h6>For at deltage i dette event skal du oprette dig <a href="/register">her</a></h6>
                         </div>
                     </div>
                 </div>
@@ -52,13 +46,12 @@
                                 <p>{{event.description}}</p>
                             </div>
 
-                            <div class="form-group col-12 mt-5">
-                                <p class="text-center">{{event.adress}}</p>
+                            <div class="form-group col-12 mt-3">
+                                <p class="">{{event.adress}}</p>
                             </div>
 
                             <div class="form-group col-12 ">
-                                <p class="text-center">{{event.start_of_event_date_pretty}}</p>
-                                <p class="text-center">{{event.start_of_event_clock}}</p>
+                                <p class="">{{event.start_of_event_date_pretty}} - {{event.start_of_event_clock}}</p>
                             </div>
 
 
@@ -77,10 +70,9 @@
         data() {
             return {
                 event: {},
+                user: false,
                 center: { lat: 55.686723, lng: 12.5615783 },
                 zoom: 11,
-                name: '',
-                comment: ''
             }
         },
         mounted() {
@@ -102,7 +94,15 @@
 
                 axios.get('/event/raw/'+this.event_id)
                     .then(function (response) {
-                        self.event = response.data
+                        
+                        console.log(response.data);
+                        
+                        self.event = response.data[0];
+
+                        if(response.data[1]){
+                            self.user = response.data[1];
+                        }
+
                         self.center = self.calcPos(self.event)
                     })
             },
@@ -119,9 +119,7 @@
 
                 var data = new FormData();
                 data.append('id', this.event.id);
-                data.append('name', this.name)
-                data.append('comment', this.comment)
-
+                data.append('user_id', this.user.id)
                 var self = this
 
                 axios.post('/event/signup', data)

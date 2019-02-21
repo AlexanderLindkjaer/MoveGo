@@ -8,13 +8,14 @@
                        <div v-for="signup in event.signups" class="attende">
 
                            <div class="attende-name">
-                               <h4>{{signup.name}}</h4>
+                               <h4>{{signup.user.name}}</h4>
                            </div>
 
-                           <div class="attende-comment" v-if="signup.comment">
-                               <!--<p class="mb-1">Kommentar:</p>-->
-                               {{signup.comment}}
-                           </div>
+                           <!--<div class="attende-comment" v-if="signup.comment">-->
+                               <!--&lt;!&ndash;<p class="mb-1">Kommentar:</p>&ndash;&gt;-->
+                               <!--{{signup.comment}}-->
+                           <!--</div>-->
+
                        </div>
                     </div>
                 </div>
@@ -45,7 +46,7 @@
 
                 axios.get('/event/raw/'+this.event_id)
                     .then(function (response) {
-                        self.event = response.data
+                        self.event = response.data[0]
                     })
             },
 

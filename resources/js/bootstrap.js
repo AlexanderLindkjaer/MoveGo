@@ -13,6 +13,11 @@ try {
     require('typed.js');
     require('bootstrap');
     require('toastr');
+    require('moment');
+
+
+    window.moment = require('moment');
+
 
     window.Typed =  require('typed.js');
     window.toastr = require('toastr');

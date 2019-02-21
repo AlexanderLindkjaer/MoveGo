@@ -10,22 +10,22 @@
 
                     <div class="form-group col-md-12 ">
                         <label >Overskrift</label>
-                        <input type="text" class="form-control" v-model="event.headline">
+                        <input name="Overskrift" type="text" v-validate="'required'" class="form-control" v-model="event.headline">
                     </div>
 
                     <div class="form-group col-md-12 ">
                         <label >Beskrivelse</label>
-                        <textarea type="textarea" class="form-control" v-model="event.description"></textarea>
+                        <textarea name="Beskrivelse" type="textarea" v-validate="'required'" class="form-control" v-model="event.description"></textarea>
                     </div>
 
                     <div class="form-group col-md-12 ">
                         <label >Start dato</label>
-                        <input type="date" class="form-control" v-model="event.start_of_event_date">
+                        <input name="Start dato" type="date" class="form-control" v-validate="'required'" v-model="event.start_of_event_date">
                     </div>
 
                     <div class="form-group col-md-12 ">
                         <label >Start tidspunkt</label>
-                        <input type="text" class="form-control" v-model="event.start_of_event_clock">
+                        <input name="Start tidspunkt" type="text" class="form-control" v-validate="'required'" v-model="event.start_of_event_clock">
                     </div>
 
                 </div>
@@ -76,14 +76,14 @@
 
                     <div class="form-group col-md-12 ">
                         <label >Adresse</label>
-                        <input type="text" class="form-control" v-model="event.adress">
+                        <input name="Adresse" type="text" v-validate="'required'" class="form-control" v-model="event.adress">
                     </div>
                 </div>
             </div>
         </div>
-
+        
         <div class="col-12  d-flex align-items-stretch  my-4">
-            <div class="btn bg-orange w-100 text-white text-center" @click="CreateUpdate"><h3>{{ state == 'create' ? 'Opret Aktivitet' : 'Rediger Aktivitet' }}</h3></div>
+            <div class="btn bg-orange w-100 text-white text-center" @click="validate"><h3>{{ state == 'create' ? 'Opret Aktivitet' : 'Rediger Aktivitet' }}</h3></div>
         </div>
 
     </div>
@@ -139,10 +139,26 @@
             setUserPosition (position) {
                 this.userPosition = position
             },
+            validate()
+            {
+                this.$validator.validate().then(result => {
+                    if (result) {
+                       this.CreateUpdate();
+                    }else{
+                        // this.errors.all().forEach(error => {
+                        //    console.log(error);
+                        // });
+                        toastr.error('En eller flere af felterne er ikke udfyldt');
+                    }
+                });
+            },
             CreateUpdate()
             {
                 var data = this.getData();
                 var self = this;
+
+                this.$validator.validate()
+
 
                 axios.post('/event/'+this.state, data)
                     .then(function (response) {
