@@ -1928,7 +1928,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 var self = this;
 
                 axios.get('/event/raw/' + this.event_id).then(function (response) {
-                    self.event = response.data;
+                    self.event = response.data[0];
                     self.searchLocation = { lat: Number(self.event.lat), lng: Number(self.event.long) };
                 });
             }
