@@ -32,4 +32,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(Signup::class);
     }
+
+    public function eventActions($event_id = 0)
+    {
+        $allowed = false;
+
+        if($this->is_admin) $allowed = true;
+
+        $event = event::find($event_id);
+        if(!$event) return false;
+
+        if ($event->user_id == $this->id) $allowed = true;
+
+        return $allowed;
+
+    }
 }

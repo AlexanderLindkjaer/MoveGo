@@ -14,6 +14,7 @@
 Route::get('/', 'EventController@home')->name('home');
 Route::get('/event/create', 'EventController@create')->name('create-event');
 Route::get('/event/edit/{event}', 'EventController@edit')->name('edit-event');
+Route::get('/event/delete/{event}', 'EventController@delete')->name('delete-event');
 Route::get('/event/raw/{event}', 'EventController@raw');
 Route::get('/event/all/raw', 'EventController@allRaw');
 Route::get('/events/all/raw', 'EventController@rawIndex');

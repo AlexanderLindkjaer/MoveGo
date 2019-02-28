@@ -106,7 +106,8 @@ toastr.options.toastClass = 'toastr';
                 .end();
         })
     }
-
-
     };
+
+    $.movego.toastrOnLoad('#event-deleted', 'Event deleted');
+
 }(jQuery));

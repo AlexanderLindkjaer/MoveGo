@@ -56,7 +56,8 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        $event = event::create($request->all());
+        $data = array_merge($request->all(), ['user_id' => auth()->user()->id]);
+        $event = event::create($data);
         return $event;
     }
 
@@ -72,6 +73,7 @@ class EventController extends Controller
         return view('show-event', compact('id'));
     }
 
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -80,6 +82,9 @@ class EventController extends Controller
      */
     public function edit(event $event)
     {
+
+        if(!auth()->user()->eventActions($event->id)) return redirect('/');
+
         $state = 'edit';
         $id = $event->id;
 
@@ -134,9 +139,21 @@ class EventController extends Controller
      */
     public function update(Request $request)
     {
+
+        if(!auth()->user()->eventActions($request->id)) return redirect('/');
+
         $event = Event::findOrFail($request->id);
         $event->update($request->all());
         return $event;
+    }
+
+    public function delete(event $event)
+    {
+        if(!auth()->user()->eventActions($event->id)) return redirect('/');
+
+        $event->delete();
+
+        return redirect('/#event-deleted');
     }
 
     /**

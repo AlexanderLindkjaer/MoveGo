@@ -15,6 +15,7 @@ class event extends Model
         'lat',
         'start_of_event_date',
         'start_of_event_clock',
+        'user_id'
     ];
 
     public function signups()
