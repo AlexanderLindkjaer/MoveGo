@@ -20,13 +20,15 @@ class AdminController extends Controller
         $user = auth()->user();
 
         if(!$user or !$user->is_admin){
-            redirect('/');
+            return true;
         }
+
+        return false;
     }
 
     public function show()
     {
-        $this->protect();
+        if($this->protect())  return redirect('/');
 
         $users = User::get();
         $no_of_users = $users->count();
