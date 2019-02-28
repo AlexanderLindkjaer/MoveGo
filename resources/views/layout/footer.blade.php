@@ -14,7 +14,7 @@
                     <li class="list-inline-item">&sdot;</li>
 
                 </ul>
-                <p class="text-muted small mb-4 mb-lg-0 text-center text-white">&copy; MoveGO 2018. All Rights Reserved.</p>
+                <p class="text-muted small mb-4 mb-lg-0 text-center text-white">&copy; MoveGo 2019. All Rights Reserved.</p>
             </div>
         </div>
     </div>
