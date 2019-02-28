@@ -14,7 +14,7 @@
                         <i class="fa fa-futbol-o m-auto  "></i>
                     </div>
                     <h3>Aktivitet</h3>
-                    <p class="lead mb-0">Movego er en platform, hvor folk let og gratis kan melde sig til sportslige aktiviteter i deres nærområde.</p>
+                    <p class="lead mb-0">MoveGo muliggør at folk let og gratis kan melde sig til sportslige aktiviteter i deres nærområde</p>
                 </div>
             </div>
             <div class="col-lg-4">
@@ -23,7 +23,7 @@
                         <i class="fa fa-tablet m-auto"></i>
                     </div>
                     <h3>Platform</h3>
-                    <p class="lead mb-0">Movego muliggør at brugeren selv kan oprette sportslige begivenheder.</p>
+                    <p class="lead mb-0">MoveGo er en platform, hvor brugerne selv kan oprette sportslige begivenheder.</p>
                 </div>
             </div>
             <div class="col-lg-4">
