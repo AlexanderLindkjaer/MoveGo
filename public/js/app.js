@@ -81143,7 +81143,11 @@ $('document').ready(function () {
     if ($('#header_typed').length) {
 
         var options = {
-            strings: ['i nærheden af dig', 'når det skal være sjovt', 'når det skal være socialt', 'som det passer dig'],
+            strings: [
+            // 'i nærheden af dig',
+            // 'når det skal være sjovt',
+            // 'når det skal være socialt',
+            'som det passer dig'],
             typeSpeed: 50,
             backSpeed: 25,
             backDelay: 500,

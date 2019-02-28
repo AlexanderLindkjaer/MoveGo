@@ -23,6 +23,11 @@ Route::post('/event/signup', 'EventController@signup');
 Route::get('event/{event}', 'EventController@show');
 
 
+Route::get('admin', 'AdminController@show');
+
+
+
+
 Route::get('/koncept', 'EventController@concept')->name('concept');
 
 

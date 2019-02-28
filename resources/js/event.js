@@ -17,9 +17,9 @@ $('document').ready(function () {
 
         var options = {
             strings: [
-                'i nærheden af dig',
-                'når det skal være sjovt',
-                'når det skal være socialt',
+                // 'i nærheden af dig',
+                // 'når det skal være sjovt',
+                // 'når det skal være socialt',
                 'som det passer dig'
 
             ],
