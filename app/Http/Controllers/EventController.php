@@ -58,6 +58,10 @@ class EventController extends Controller
     {
         $data = array_merge($request->all(), ['user_id' => auth()->user()->id]);
         $event = event::create($data);
+        $signup = Signup::create([
+            'user_id' => auth()->user()->id,
+            'event_id' => $event->id,
+        ]);
         return $event;
     }
 
