@@ -11,6 +11,7 @@
 |
 */
 
+//EVENT
 Route::get('/', 'EventController@home')->name('home');
 Route::get('/event/create', 'EventController@create')->name('create-event');
 Route::get('/event/edit/{event}', 'EventController@edit')->name('edit-event');
@@ -25,7 +26,13 @@ Route::post('/event/signup', 'EventController@signup');
 Route::get('event/{event}', 'EventController@show');
 
 
-Route::get('admin', 'AdminController@show');
+//CHAT
+Route::get('/event/chat/{event}', 'EventChatController@eventRaw');
+Route::post('/event/chat', 'EventChatController@newChat');
+
+
+Route::get('/user', 'EventChatController@user');
+
 
 
 

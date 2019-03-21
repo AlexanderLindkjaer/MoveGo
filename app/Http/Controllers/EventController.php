@@ -29,6 +29,7 @@ class EventController extends Controller
         return event::whereDate('start_of_event_date', '>=', $now)->get();
     }
 
+
     /**
      * Show the form for creating a new resource.
      *

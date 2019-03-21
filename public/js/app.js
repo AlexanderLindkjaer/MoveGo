@@ -1979,12 +1979,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['event_id'],
     data: function data() {
         return {
-            event: {}
+            event: {},
+            chats: {},
+            message: ''
         };
     },
     mounted: function mounted() {
@@ -2002,6 +2017,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             axios.get('/event/raw/' + this.event_id).then(function (response) {
                 self.event = response.data[0];
+            });
+
+            axios.get('/event/chat/' + this.event_id).then(function (response) {
+                self.chats = response.data;
+            });
+        },
+        sendMessage: function sendMessage() {
+
+            if (this.message == '') return;
+
+            axios.post('/event/chat', { event_id: this.event_id, message: this.message }).then(function (response) {
+                location.reload();
+            }).catch(function (response) {
+                toastr.warning('You need to be logged in and signed up to the event');
             });
         }
     }
@@ -6220,7 +6249,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.attende-name{\n}\n.attende-comment{\n}\n.attende{\n    background-color: #f2f2f2;\n    -webkit-box-shadow: 5px solid black;\n    box-shadow: 5px solid black;\n    border-radius: 10px;\n    margin: 15px;\n    padding: 15px;\n}\n\n", ""]);
+exports.push([module.i, "\n.attende-name{\n}\n.attende-comment{\n}\n.attende{\n    background-color: #f2f2f2;\n    -webkit-box-shadow: 5px solid black;\n    box-shadow: 5px solid black;\n    border-radius: 10px;\n    margin: 15px;\n    padding: 15px;\n}\n.chat-entry{\n    background-color: #f2f2f2;\n    -webkit-box-shadow: 5px solid black;\n    box-shadow: 5px solid black;\n    border-radius: 10px;\n\n    margin: 5px;\n    padding: 5px;\n}\n.chat-textarea{\n    margin-top: 10px;\n    -webkit-box-shadow: 5px solid black;\n    box-shadow: 5px solid black;\n    border-radius: 10px;\n\n    margin: 5px;\n    padding: 5px;\n}\n.like-box-scroll{\n    max-height: 300px;\n    overflow-y: scroll;\n}\n\n", ""]);
 
 // exports
 
@@ -68240,7 +68269,7 @@ var render = function() {
   return _c("div", [
     _c("div", { staticClass: "container my-3" }, [
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-12" }, [
+        _c("div", { staticClass: "col-md-6" }, [
           _c(
             "div",
             { staticClass: "like-box p-2" },
@@ -68257,6 +68286,64 @@ var render = function() {
             ],
             2
           )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("div", { staticClass: "like-box p-2" }, [
+            _c("h2", { staticClass: "text-center" }, [_vm._v("Chat")]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: " like-box-scroll" },
+              _vm._l(_vm.chats, function(chat) {
+                return _c("div", { staticClass: "chat-entry mb-3" }, [
+                  _c("div", { staticClass: "attende-name" }, [
+                    _c("b", [_vm._v(_vm._s(chat.user.name))]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "mb-0" }, [
+                      _vm._v(_vm._s(chat.message))
+                    ])
+                  ])
+                ])
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c("div", [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.message,
+                    expression: "message"
+                  }
+                ],
+                staticClass: "w-100 chat-textarea",
+                attrs: { placeholder: "Your message" },
+                domProps: { value: _vm.message },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.message = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "btn bg-orange text-white text-center w-100",
+                  on: { click: _vm.sendMessage }
+                },
+                [_vm._v("Send message")]
+              )
+            ])
+          ])
         ])
       ])
     ])

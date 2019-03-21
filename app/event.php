@@ -28,6 +28,10 @@ class event extends Model
         return $this->signups->count();
     }
 
+    public function event_chats()
+    {
+        return $this->hasMany(EventChat::class);
+    }
 
     public function userIsSignedUp($user)
     {
