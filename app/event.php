@@ -29,5 +29,23 @@ class event extends Model
     }
 
 
+    public function userIsSignedUp($user)
+    {
+        foreach ($this->signups as $signup) {
+            if($signup->user_id == $user->id) return true;
+        }
+        return 0;
+    }
+
+    public function signOff($user)
+    {
+        foreach ($this->signups as $signup) {
+            if($signup->user_id == $user->id){
+                $signup->delete();
+            }
+        }
+    }
+
+
 
 }

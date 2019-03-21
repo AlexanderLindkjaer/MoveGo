@@ -2120,9 +2120,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['event_id'],
+    props: ['event_id', 'signed_up'],
     data: function data() {
         return {
             event: {},
@@ -67711,28 +67715,39 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "attend pt-2", on: { click: _vm.attend } },
-                    [
-                      _c("i", {
-                        staticClass: "fa fa-5x fa-check-circle-o",
-                        attrs: { "aria-hidden": "true" }
-                      }),
-                      _vm._v(" "),
-                      _c("p", [_vm._v("Deltag")])
-                    ]
-                  )
+                  !_vm.signed_up
+                    ? _c(
+                        "div",
+                        {
+                          staticClass: "attend pt-2",
+                          on: { click: _vm.attend }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "fa fa-5x fa-check-circle-o",
+                            attrs: { "aria-hidden": "true" }
+                          }),
+                          _vm._v(" "),
+                          _c("p", [_vm._v("Deltag")])
+                        ]
+                      )
+                    : _c("div", [
+                        _vm._v(
+                          "\n                           Du deltager i dette event\n                       "
+                        )
+                      ])
                 ])
               : _c("div", [
-                  _c("h4", { attrs: { "mb-3": "" } }, [
-                    _vm._v(
-                      _vm._s(_vm.event.no_of_signups) +
-                        " deltager i denne aktivitet"
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(0)
+                  _c("div", [
+                    _c("h4", { attrs: { "mb-3": "" } }, [
+                      _vm._v(
+                        _vm._s(_vm.event.no_of_signups) +
+                          " deltager i denne aktivitet"
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(0)
+                  ])
                 ])
           ])
         ])

@@ -17,14 +17,19 @@
                     <div class="like-box text-center pointer py-4">
                        <div v-if="user">
                            <h4>{{event.no_of_signups}} deltager i denne aktivitet</h4>
-                           <div @click="attend" class="attend pt-2">
+                           <div v-if="!signed_up" @click="attend" class="attend pt-2">
                                <i class="fa fa-5x fa-check-circle-o" aria-hidden="true"></i>
                                <p>Deltag</p>
                            </div>
+                           <div v-else>
+                               Du deltager i dette event
+                           </div>
                        </div>
                         <div v-else>
-                            <h4 mb-3>{{event.no_of_signups}} deltager i denne aktivitet</h4>
-                            <h6>For at deltage i dette event skal du oprette dig <a href="/register">her</a></h6>
+                            <div>
+                                <h4 mb-3>{{event.no_of_signups}} deltager i denne aktivitet</h4>
+                                <h6>For at deltage i dette event skal du oprette dig <a href="/register">her</a></h6>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -54,7 +59,6 @@
                                 <p class="">{{event.start_of_event_date_pretty}} - {{event.start_of_event_clock}}</p>
                             </div>
 
-
                         </div>
                     </div>
                 </div>
@@ -66,7 +70,7 @@
 
 <script>
     export default {
-        props: ['event_id'],
+        props: ['event_id', 'signed_up'],
         data() {
             return {
                 event: {},

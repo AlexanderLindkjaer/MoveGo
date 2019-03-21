@@ -70,7 +70,13 @@ class EventController extends Controller
     public function show(event $event)
     {
         $id = $event->id;
-        return view('show-event', compact('id'));
+        if(auth()->user()){
+            $signedUp = $event->userIsSignedUp(auth()->user());
+        }else{
+            $signedUp = 0;
+        }
+
+        return view('show-event', compact('id', 'signedUp'));
     }
 
 
@@ -90,6 +96,14 @@ class EventController extends Controller
 
 
         return view('create-event', compact('state', 'id'));
+    }
+
+    public function signOff(event $event)
+    {
+        if(auth()->user()){
+            $event->signOff(auth()->user());
+        }
+        return redirect()->back();
     }
 
     public function signup(Request $request)
