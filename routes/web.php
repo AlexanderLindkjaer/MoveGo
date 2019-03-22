@@ -33,7 +33,7 @@ Route::post('/event/chat', 'EventChatController@newChat');
 
 Route::get('/user', 'EventChatController@user');
 
-
+Route::get('admin', 'AdminController@show');
 
 
 
