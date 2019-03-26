@@ -4,7 +4,7 @@
     <show-event event_id="{{$id}}" :signed_up="{{$signedUp}}"></show-event>
     <event-comments event_id="{{$id}}"></event-comments>
 
-    @if(auth()->user()->eventActions($id))
+    @if(auth()->user() && auth()->user()->eventActions($id))
         <div class="container mb-4">
             <div class="row">
                 <div class="col-6">
