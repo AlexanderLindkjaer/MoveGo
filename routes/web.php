@@ -19,11 +19,14 @@ Route::get('/event/signoff/{event}', 'EventController@signOff')->name('signoff-e
 Route::get('/event/delete/{event}', 'EventController@delete')->name('delete-event');
 Route::get('/event/raw/{event}', 'EventController@raw');
 Route::get('/event/all/raw', 'EventController@allRaw');
+Route::get('/event/user/raw', 'EventController@allUserRaw');
 Route::get('/events/all/raw', 'EventController@rawIndex');
 Route::post('/event/create', 'EventController@store');
 Route::post('/event/edit', 'EventController@update');
 Route::post('/event/signup', 'EventController@signup');
 Route::get('event/{event}', 'EventController@show');
+
+Route::get('my-events', 'EventController@myFeed')->name('my-feed');
 
 
 //CHAT

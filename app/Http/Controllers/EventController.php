@@ -18,6 +18,7 @@ class EventController extends Controller
     {
         //
     }
+
     public function rawIndex()
     {
         return event::all();
@@ -27,6 +28,25 @@ class EventController extends Controller
     {
         $now = Carbon::now();
         return event::whereDate('start_of_event_date', '>=', $now)->get();
+    }
+
+    public function allUserRaw()
+    {
+        $user = auth()->user();
+        $now = now();
+        $events = event::whereHas('signups', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })
+            ->orderByDesc('start_of_event_date')
+            ->get();
+        foreach ($events as $event) {
+            $event->in_future = true;
+            if($now->gt(Carbon::parse($event->start_of_event_date))){
+                $event->in_future = false;
+            }
+        }
+
+        return $events;
     }
 
 
@@ -52,7 +72,7 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -69,15 +89,15 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\event  $event
+     * @param  \App\event $event
      * @return \Illuminate\Http\Response
      */
     public function show(event $event)
     {
         $id = $event->id;
-        if(auth()->user()){
+        if (auth()->user()) {
             $signedUp = $event->userIsSignedUp(auth()->user());
-        }else{
+        } else {
             $signedUp = 0;
         }
 
@@ -88,13 +108,13 @@ class EventController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\event  $event
+     * @param  \App\event $event
      * @return \Illuminate\Http\Response
      */
     public function edit(event $event)
     {
 
-        if(!auth()->user()->eventActions($event->id)) return redirect('/');
+        if (!auth()->user()->eventActions($event->id)) return redirect('/');
 
         $state = 'edit';
         $id = $event->id;
@@ -105,7 +125,7 @@ class EventController extends Controller
 
     public function signOff(event $event)
     {
-        if(auth()->user()){
+        if (auth()->user()) {
             $event->signOff(auth()->user());
         }
         return redirect()->back();
@@ -116,7 +136,7 @@ class EventController extends Controller
         $event = event::find($request->id);
 
         $existing = Signup::where('event_id', $event->id)->where('user_id', $request->user_id)->first();
-        if($existing){
+        if ($existing) {
             abort('403', 'Bruger er allerede tilmeldt');
         }
 
@@ -140,7 +160,7 @@ class EventController extends Controller
         $data = array();
         array_push($data, $event);
 
-        if(auth()->user()){
+        if (auth()->user()) {
             array_push($data, auth()->user());
         }
 
@@ -152,14 +172,14 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\event  $event
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\event $event
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
 
-        if(!auth()->user()->eventActions($request->id)) return redirect('/');
+        if (!auth()->user()->eventActions($request->id)) return redirect('/');
 
         $event = Event::findOrFail($request->id);
         $event->update($request->all());
@@ -168,7 +188,7 @@ class EventController extends Controller
 
     public function delete(event $event)
     {
-        if(!auth()->user()->eventActions($event->id)) return redirect('/');
+        if (!auth()->user()->eventActions($event->id)) return redirect('/');
 
         $event->delete();
 
@@ -178,11 +198,17 @@ class EventController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\event  $event
+     * @param  \App\event $event
      * @return \Illuminate\Http\Response
      */
     public function concept()
     {
         return view('concept');
+    }
+
+
+    public function myFeed()
+    {
+        return view('my-feed');
     }
 }

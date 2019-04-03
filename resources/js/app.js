@@ -22,6 +22,7 @@ window.Vue = require('vue');
 Vue.component('events', require('./components/EventsComponent.vue'));
 Vue.component('single-event', require('./components/SingleEventComponent.vue'));
 Vue.component('events-map', require('./components/AllEventsMap.vue'));
+Vue.component('my-feed', require('./components/MyEvents.vue'));
 Vue.component('create-edit-event', require('./components/CreateEditEvent.vue'));
 Vue.component('show-event', require('./components/ShowEvent.vue'));
 Vue.component('event-comments', require('./components/EventComment.vue'));

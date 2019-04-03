@@ -31,6 +31,9 @@
         <div>
             <h6 class="mb-0 d-inline-block ml-4"><a class=" text-white mb-0 d-inline-block" href="{{ route('concept') }}">Koncept</a></h6>
             <h6 class="mb-0 d-inline-block ml-4"><a class=" text-white mb-0 d-inline-block" href="{{ route('create-event') }}">Opret aktivitet</a></h6>
+            @auth
+                <h6 class="mb-0 d-inline-block ml-4"><a class=" text-white mb-0 d-inline-block" href="{{ route('my-feed') }}">Mine aktiviteter</a></h6>
+            @endauth
             <div class="d-inline-block ml-4 navbar-nav text-white">
                 <!-- Authentication Links -->
                 @guest
