@@ -209,6 +209,7 @@ class EventController extends Controller
 
     public function myFeed()
     {
+        if(!auth()->user()) return redirect()->route('frontpage');
         return view('my-feed');
     }
 }
