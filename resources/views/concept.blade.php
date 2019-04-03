@@ -9,7 +9,7 @@
                 <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/stock/athletes-basketball.jpg');"></div>
                 <div class="col-lg-6 order-lg-1 my-auto showcase-text">
                     <h2>Movego for alle</h2>
-                    <p class="lead mb-0">Du kender det godt.. Du står og mangler en eller flere personer til at spille en fodboldkamp, som ikke bliver til noget i sidste ende. Efter adskillige sms’er og forgæves opkald til vennerne lader du efterhånden helt være med at arrangere noget. Dette problem løser MoveGo. Med MoveGo kan du let finde personer, der deler dine sportslige interesser. MoveGo sørger dermed for din fodboldkamp bliver til noget!</p>
+                    <p class="lead mb-0">MoveGo er for dig, der mangler spillere til din basketballkamp. Dig der savner et modstanderhold til dig og dine venner. MoveGo er til dig, der foretrækker at sport skal være nemt, gratis og fleksibelt. MoveGo giver dig med andre ord med- og modspillere, der deler dine sportslige interesser.</p>
                 </div>
             </div>
             <div class="row no-gutters">
