@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Signup;
 use App\User;
-use Illuminate\Console\Scheduling\Event;
-use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-
     public function __construct()
     {
         //$this->protect();
@@ -19,7 +16,7 @@ class AdminController extends Controller
     {
         $user = auth()->user();
 
-        if(!$user or !$user->is_admin){
+        if (!$user or !$user->is_admin) {
             return true;
         }
 
@@ -28,7 +25,9 @@ class AdminController extends Controller
 
     public function show()
     {
-        if($this->protect())  return redirect('/');
+        if ($this->protect()) {
+            return redirect('/');
+        }
 
         $users = User::get();
         $no_of_users = $users->count();
@@ -36,7 +35,6 @@ class AdminController extends Controller
         $no_of_events = $events->count();
         $signups = Signup::get();
         $no_of_signups = $signups->count();
-
 
         return view('admin', compact(['users', 'no_of_users', 'events', 'no_of_events', 'signups', 'no_of_signups']));
     }

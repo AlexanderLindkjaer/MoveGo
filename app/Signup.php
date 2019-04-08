@@ -8,7 +8,7 @@ class Signup extends Model
 {
     protected $fillable = [
         'event_id',
-        'user_id'
+        'user_id',
     ];
 
     public function event()

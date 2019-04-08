@@ -2,9 +2,8 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -37,14 +36,19 @@ class User extends Authenticatable
     {
         $allowed = false;
 
-        if($this->is_admin) $allowed = true;
+        if ($this->is_admin) {
+            $allowed = true;
+        }
 
         $event = event::find($event_id);
-        if(!$event) return false;
+        if (!$event) {
+            return false;
+        }
 
-        if ($event->user_id == $this->id) $allowed = true;
+        if ($event->user_id == $this->id) {
+            $allowed = true;
+        }
 
         return $allowed;
-
     }
 }

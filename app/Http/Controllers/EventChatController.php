@@ -18,27 +18,25 @@ class EventChatController extends Controller
         //
     }
 
-
     public function eventRaw(event $event)
     {
         return EventChat::with(['user'])->where('event_id', $event->id)->get();
     }
 
-
     public function newChat(Request $request)
     {
-
         $event = Event::findOrFail($request->event_id);
 
-        if(!auth()->user() || !$event->userIsSignedUp(auth()->user())) abort(403, 'not allowed');
+        if (!auth()->user() || !$event->userIsSignedUp(auth()->user())) {
+            abort(403, 'not allowed');
+        }
 
         EventChat::create([
-            'user_id' => auth()->user()->id,
+            'user_id'  => auth()->user()->id,
             'event_id' => $event->id,
-            'message' => $request->message,
+            'message'  => $request->message,
         ]);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -58,7 +56,8 @@ class EventChatController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -69,7 +68,8 @@ class EventChatController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\EventChat  $eventChat
+     * @param \App\EventChat $eventChat
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(EventChat $eventChat)
@@ -80,7 +80,8 @@ class EventChatController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\EventChat  $eventChat
+     * @param \App\EventChat $eventChat
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(EventChat $eventChat)
@@ -91,8 +92,9 @@ class EventChatController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\EventChat  $eventChat
+     * @param \Illuminate\Http\Request $request
+     * @param \App\EventChat           $eventChat
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, EventChat $eventChat)
@@ -103,7 +105,8 @@ class EventChatController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\EventChat  $eventChat
+     * @param \App\EventChat $eventChat
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(EventChat $eventChat)
