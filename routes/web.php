@@ -28,22 +28,17 @@ Route::get('event/{event}', 'EventController@show');
 
 Route::get('my-events', 'EventController@myFeed')->name('my-feed');
 
-
 //CHAT
 Route::get('/event/chat/{event}', 'EventChatController@eventRaw');
 Route::post('/event/chat', 'EventChatController@newChat');
-
 
 Route::get('/user', 'EventChatController@user');
 
 Route::get('admin', 'AdminController@show');
 
-
-
 Route::get('/koncept', 'EventController@concept')->name('concept');
 
-
-Route::get('/kontakt', function (){
+Route::get('/kontakt', function () {
     return view('contact');
 })->name('contact');
 

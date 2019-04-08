@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class CreateAdmin extends Migration
@@ -16,16 +14,15 @@ class CreateAdmin extends Migration
         $p = \App\User::where('email', 'petertoftekaer@gmail.com')->first();
         $a = \App\User::where('email', 'aksel-faxe@hotmail.com')->first();
 
-        if($p){
+        if ($p) {
             $p->is_admin = true;
             $p->save();
         }
 
-        if($a){
+        if ($a) {
             $a->is_admin = true;
             $a->save();
         }
-
     }
 
     /**

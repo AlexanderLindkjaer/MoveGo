@@ -15,7 +15,7 @@ class event extends Model
         'lat',
         'start_of_event_date',
         'start_of_event_clock',
-        'user_id'
+        'user_id',
     ];
 
     public function signups()
@@ -36,20 +36,20 @@ class event extends Model
     public function userIsSignedUp($user)
     {
         foreach ($this->signups as $signup) {
-            if($signup->user_id == $user->id) return true;
+            if ($signup->user_id == $user->id) {
+                return true;
+            }
         }
+
         return 0;
     }
 
     public function signOff($user)
     {
         foreach ($this->signups as $signup) {
-            if($signup->user_id == $user->id){
+            if ($signup->user_id == $user->id) {
                 $signup->delete();
             }
         }
     }
-
-
-
 }

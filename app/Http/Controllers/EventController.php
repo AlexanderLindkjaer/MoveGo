@@ -27,6 +27,7 @@ class EventController extends Controller
     public function allRaw()
     {
         $now = Carbon::now();
+
         return event::whereDate('start_of_event_date', '>=', $now)->get();
     }
 
@@ -41,14 +42,13 @@ class EventController extends Controller
             ->get();
         foreach ($events as $event) {
             $event->in_future = true;
-            if($now->gt(Carbon::parse($event->start_of_event_date))){
+            if ($now->gt(Carbon::parse($event->start_of_event_date))) {
                 $event->in_future = false;
             }
         }
 
         return $events;
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -66,13 +66,15 @@ class EventController extends Controller
     public function home()
     {
         $events = event::all();
+
         return view('frontpage', compact('events'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -80,16 +82,18 @@ class EventController extends Controller
         $data = array_merge($request->all(), ['user_id' => auth()->user()->id]);
         $event = event::create($data);
         $signup = Signup::create([
-            'user_id' => auth()->user()->id,
+            'user_id'  => auth()->user()->id,
             'event_id' => $event->id,
         ]);
+
         return $event;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\event $event
+     * @param \App\event $event
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(event $event)
@@ -104,21 +108,21 @@ class EventController extends Controller
         return view('show-event', compact('id', 'signedUp'));
     }
 
-
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\event $event
+     * @param \App\event $event
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(event $event)
     {
-
-        if (!auth()->user()->eventActions($event->id)) return redirect('/');
+        if (!auth()->user()->eventActions($event->id)) {
+            return redirect('/');
+        }
 
         $state = 'edit';
         $id = $event->id;
-
 
         return view('create-event', compact('state', 'id'));
     }
@@ -128,6 +132,7 @@ class EventController extends Controller
         if (auth()->user()) {
             $event->signOff(auth()->user());
         }
+
         return redirect()->back();
     }
 
@@ -142,7 +147,7 @@ class EventController extends Controller
 
         $signup = Signup::create([
             'event_id' => $event->id,
-            'user_id' => $request->user_id,
+            'user_id'  => $request->user_id,
         ]);
 
         $event->increment('no_of_signups');
@@ -157,38 +162,41 @@ class EventController extends Controller
         $event->load(['signups']);
         $event->load(['signups.user']);
 
-        $data = array();
+        $data = [];
         array_push($data, $event);
 
         if (auth()->user()) {
             array_push($data, auth()->user());
         }
 
-
         return $data;
-
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\event $event
+     * @param \Illuminate\Http\Request $request
+     * @param \App\event               $event
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
-
-        if (!auth()->user()->eventActions($request->id)) return redirect('/');
+        if (!auth()->user()->eventActions($request->id)) {
+            return redirect('/');
+        }
 
         $event = Event::findOrFail($request->id);
         $event->update($request->all());
+
         return $event;
     }
 
     public function delete(event $event)
     {
-        if (!auth()->user()->eventActions($event->id)) return redirect('/');
+        if (!auth()->user()->eventActions($event->id)) {
+            return redirect('/');
+        }
 
         $event->delete();
 
@@ -198,7 +206,8 @@ class EventController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\event $event
+     * @param \App\event $event
+     *
      * @return \Illuminate\Http\Response
      */
     public function concept()
@@ -206,10 +215,12 @@ class EventController extends Controller
         return view('concept');
     }
 
-
     public function myFeed()
     {
-        if(!auth()->user()) return redirect()->route('frontpage');
+        if (!auth()->user()) {
+            return redirect()->route('frontpage');
+        }
+
         return view('my-feed');
     }
 }

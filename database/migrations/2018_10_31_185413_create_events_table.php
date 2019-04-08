@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateEventsTable extends Migration
 {
@@ -23,7 +23,6 @@ class CreateEventsTable extends Migration
             $table->integer('no_of_signups')->default(0);
             $table->dateTime('start_of_event_date');
             $table->string('start_of_event_clock');
-
 
             $table->timestamps();
         });

@@ -10,7 +10,7 @@ class EventChat extends Model
         'id',
         'user_id',
         'event_id',
-        'message'
+        'message',
     ];
 
     public function user()
